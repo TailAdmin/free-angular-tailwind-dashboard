@@ -14,10 +14,14 @@ export class SidebarService {
   isHovered$ = this.isHoveredSubject.asObservable();
 
   setExpanded(val: boolean) {
+    console.log("asdsadsa")
+
     this.isExpandedSubject.next(val);
   }
 
   toggleExpanded() {
+    console.log("asdsadsa")
+
     this.isExpandedSubject.next(!this.isExpandedSubject.value);
   }
 
