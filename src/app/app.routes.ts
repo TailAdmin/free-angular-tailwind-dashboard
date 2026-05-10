@@ -23,6 +23,7 @@ import { ProductListTableComponent } from './shared/components/ecommerce/product
 import { AddProductFormComponent } from './shared/components/ecommerce/add-product-form/add-product-form.component';
 
 
+
 export const routes: Routes = [
   {
     path:'',
@@ -66,6 +67,11 @@ export const routes: Routes = [
         path:'profile',
         component:ProfileComponent,
         title:'Angular Profile Dashboard | TailAdmin - Angular Admin Dashboard Template'
+      },
+      {
+        path: 'product-list', // The URL path
+        component: ProductListTableComponent,
+        title: 'Product List | TailAdmin'
       },
       {
         path:'form-elements',

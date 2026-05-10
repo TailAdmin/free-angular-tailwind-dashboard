@@ -5,7 +5,7 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { SafeHtmlPipe } from '../../pipe/safe-html.pipe';
 import { SidebarWidgetComponent } from './app-sidebar-widget.component';
 import { combineLatest, Subscription } from 'rxjs';
-
+import { TranslateModule } from '@ngx-translate/core';
 type NavItem = {
   name: string;
   icon: string;
@@ -16,10 +16,12 @@ type NavItem = {
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   imports: [
     CommonModule,
     RouterModule,
     SafeHtmlPipe,
+    TranslateModule,
     SidebarWidgetComponent
   ],
   templateUrl: './app-sidebar.component.html',
