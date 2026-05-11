@@ -5,7 +5,7 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { SafeHtmlPipe } from '../../pipe/safe-html.pipe';
 import { SidebarWidgetComponent } from './app-sidebar-widget.component';
 import { combineLatest, Subscription } from 'rxjs';
-
+import { TranslateModule } from '@ngx-translate/core';
 type NavItem = {
   name: string;
   icon: string;
@@ -16,10 +16,12 @@ type NavItem = {
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
   imports: [
     CommonModule,
     RouterModule,
     SafeHtmlPipe,
+    TranslateModule,
     SidebarWidgetComponent
   ],
   templateUrl: './app-sidebar.component.html',
@@ -33,6 +35,19 @@ export class AppSidebarComponent {
       name: "Dashboard",
       subItems: [
         { name: "Ecommerce", path: "/" },
+      ],
+    },
+    {
+      name: "E-commerce",
+      icon: `<svg :class="(selected === 'E-commerce') || (page === 'products' || page === 'addProduct' || page === 'billing' || page === 'invoices' || page === 'singleInvoice' || page === 'createInvoice' || page === 'transactions' || page === 'singleTransaction') ? 'menu-item-icon-active'  :'menu-item-icon-inactive'" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="menu-item-icon-active">
+      <path d="M2.31641 4H3.49696C4.24468 4 4.87822 4.55068 4.98234 5.29112L5.13429 6.37161M5.13429 6.37161L6.23641 14.2089C6.34053 14.9493 6.97407 15.5 7.72179 15.5L17.0833 15.5C17.6803 15.5 18.2205 15.146 18.4587 14.5986L21.126 8.47023C21.5572 7.4795 20.8312 6.37161 19.7507 6.37161H5.13429Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M7.7832 19.5H7.7932M16.3203 19.5H16.3303" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>`,
+      subItems: [
+        { name: "Products", path: "/products", pro: false },
+        { name: "Add Product", path: "/add-product", pro: false },
+        { name: "Invoice", path: "/invoices", pro: false }
+
       ],
     },
     {

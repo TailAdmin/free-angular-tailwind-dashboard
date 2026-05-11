@@ -5,15 +5,20 @@ import { RouterModule } from '@angular/router';
 import { ThemeToggleButtonComponent } from '../../components/common/theme-toggle/theme-toggle-button.component';
 import { NotificationDropdownComponent } from '../../components/header/notification-dropdown/notification-dropdown.component';
 import { UserDropdownComponent } from '../../components/header/user-dropdown/user-dropdown.component';
+import { TranslateModule } from '@ngx-translate/core'; //
+import { LanguageSelectorComponent } from '../../components/common/language/language-selector.component';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [
     CommonModule,
     RouterModule,
     ThemeToggleButtonComponent,
     NotificationDropdownComponent,
     UserDropdownComponent,
+    TranslateModule,
+    LanguageSelectorComponent
   ],
   templateUrl: './app-header.component.html',
 })

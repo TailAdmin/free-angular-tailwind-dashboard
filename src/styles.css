@@ -3,6 +3,7 @@ layer(base);
 
 @import "tailwindcss";
 @import "swiper/css/bundle";
+@import "flatpickr/dist/flatpickr.css";
 
 @custom-variant dark (&:is(.dark *));
 
