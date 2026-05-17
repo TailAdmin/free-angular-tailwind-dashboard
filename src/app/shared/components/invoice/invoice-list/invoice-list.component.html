@@ -1,98 +1,199 @@
-<div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-  <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-gray-800">
-    <div>
-      <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Inventory Management</h3>
-      <p class="text-sm text-gray-500 dark:text-gray-400">Manage stock and prepare sales</p>
+<div class="space-y-8">
+  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+    <div class="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-gray-800">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Inventory Management</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Manage stock and prepare sales</p>
+      </div>
+      <button 
+        (click)="toggleEdit()"
+        [class]="isEditing() ? 'bg-green-600 hover:bg-green-700' : 'bg-brand-500 hover:bg-brand-600'"
+        class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition shadow-sm">
+        <span>{{ isEditing() ? 'Save Changes' : 'Edit Stock & Prices' }}</span>
+      </button>
     </div>
-    <button 
-      (click)="toggleEdit()"
-      [class]="isEditing() ? 'bg-green-600 hover:bg-green-700' : 'bg-brand-500 hover:bg-brand-600'"
-      class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition shadow-sm">
-      <span>{{ isEditing() ? 'Save Changes' : 'Edit Stock' }}</span>
-    </button>
-  </div>
 
-  <div class="overflow-x-auto">
-    <table class="w-full table-auto">
-      <thead>
-        <tr class="border-b border-gray-200 dark:border-gray-800">
-          <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Product</th>
-          <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Stock Level</th>
-          <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Unit Price</th>
-          <th class="p-4 text-center text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Qty to Sell</th>
-          <th class="p-4 text-right text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-        @for (product of products(); track product.id) {
-          <tr class="transition hover:bg-gray-50 dark:hover:bg-gray-900">
-            <td class="p-4">
-              <p class="text-sm font-semibold text-gray-800 dark:text-white/90">{{product.name}}</p>
-              <p class="text-xs text-gray-500">{{product.sku}}</p>
-            </td>
-            
-            <td class="p-4">
-              @if (isEditing()) {
-                <input 
-                  type="number" 
-                  [ngModel]="product.stock"
-                  (ngModelChange)="updateBaseStock($index, $event)"
-                  class="w-24 rounded-md border border-brand-200 bg-brand-50/50 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800"
-                />
-              } @else {
-                <div class="flex flex-col">
-                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {{ product.stock }} total
-                  </span>
-                  <span 
-                    [ngClass]="(product.stock - product.toSell) < 10 ? 'text-red-500 font-bold' : 'text-gray-400'" 
-                    class="text-[10px] uppercase">
-                    Available: {{ product.stock - product.toSell }}
-                  </span>
-                </div>
-              }
-            </td>
-
-            <td class="p-4 text-sm text-gray-700 dark:text-gray-400">
-              {{product.price | currency:'PHP':'symbol-narrow'}}
-            </td>
-            
-            <td class="p-4">
-              <div class="flex items-center justify-center gap-3">
-                <button 
-                  (click)="updateQty($index, -1)"
-                  [disabled]="isEditing()"
-                  class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
-                  -
-                </button>
-                <span class="w-8 text-center text-sm font-bold dark:text-white">{{product.toSell}}</span>
-                <button 
-                  (click)="updateQty($index, 1)"
-                  [disabled]="isEditing() || product.toSell >= product.stock"
-                  class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
-                  +
-                </button>
-              </div>
-            </td>
-
-            <td class="p-4 text-right text-sm font-medium text-gray-800 dark:text-white">
-              {{ (product.price * product.toSell) | currency:'PHP':'symbol-narrow' }}
-            </td>
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto">
+        <thead>
+          <tr class="border-b border-gray-200 dark:border-gray-800">
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Product</th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Stock Level</th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Stock Updated</th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Unit Price</th>
+            <th class="p-4 text-center text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Qty to Sell</th>
+            <th class="p-4 text-right text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Subtotal</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+          @for (product of products(); track product.id) {
+            <tr class="transition hover:bg-gray-50 dark:hover:bg-gray-900">
+              <td class="p-4">
+                <p class="text-sm font-semibold text-gray-800 dark:text-white/90">{{product.name}}</p>
+                <p class="text-xs text-gray-500">{{product.sku}}</p>
+              </td>
+              
+              <td class="p-4">
+                @if (isEditing()) {
+                  <input 
+                    type="number" 
+                    [ngModel]="product.stock"
+                    (ngModelChange)="updateBaseStock($index, $event)"
+                    class="w-24 rounded-md border border-brand-200 bg-brand-50/50 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                  />
+                } @else {
+                  <div class="flex flex-col">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {{ product.stock }} total
+                    </span>
+                    <span 
+                      [ngClass]="(product.stock - product.toSell) < 10 ? 'text-red-500 font-bold' : 'text-gray-400'" 
+                      class="text-[10px] uppercase">
+                      Available: {{ product.stock - product.toSell }}
+                    </span>
+                  </div>
+                }
+              </td>
+
+              <td class="p-4 text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex flex-col">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">{{ product.lastUpdated | date:'MMM d, yyyy' }}</span>
+                  <span class="text-xs text-gray-400">{{ product.lastUpdated | date:'shortTime' }}</span>
+                </div>
+              </td>
+
+              <td class="p-4 text-sm text-gray-700 dark:text-gray-400">
+                @if (isEditing()) {
+                  <div class="relative flex items-center">
+                    <span class="absolute left-2 text-xs text-gray-400">₱</span>
+                    <input 
+                      type="number" 
+                      [ngModel]="product.price"
+                      (ngModelChange)="updateUnitPrice($index, $event)"
+                      class="w-28 rounded-md border border-brand-200 bg-brand-50/50 pl-5 pr-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    />
+                  </div>
+                } @else {
+                  <div class="flex flex-col">
+                    <span class="font-medium text-gray-800 dark:text-white/90">
+                      {{ product.price | currency:'PHP':'symbol-narrow' }}
+                    </span>
+                    <span class="text-[10px] text-gray-400">
+                      Updated: {{ product.priceLastUpdated | date:'MM/dd/yy h:mm a' }}
+                    </span>
+                  </div>
+                }
+              </td>
+              
+              <td class="p-4">
+                <div class="flex items-center justify-center gap-3">
+                  <button 
+                    (click)="updateQty($index, -1)"
+                    [disabled]="isEditing()"
+                    class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
+                    -
+                  </button>
+                  <span class="w-8 text-center text-sm font-bold dark:text-white">{{product.toSell}}</span>
+                  <button 
+                    (click)="updateQty($index, 1)"
+                    [disabled]="isEditing() || product.toSell >= product.stock"
+                    class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
+                    +
+                  </button>
+                </div>
+              </td>
+
+              <td class="p-4 text-right text-sm font-medium text-gray-800 dark:text-white">
+                {{ (product.price * product.toSell) | currency:'PHP':'symbol-narrow' }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-5 py-4 dark:border-gray-800 dark:bg-white/[0.02]">
+      <div class="text-sm text-gray-500">
+        Items in transaction: <strong>{{ selectedCount() }}</strong>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="text-right">
+          <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Expected Revenue</p>
+          <p class="text-2xl font-bold text-brand-500">
+            {{ totalToSell() | currency:'PHP':'symbol-narrow' }}
+          </p>
+        </div>
+        <button 
+          (click)="submitTransaction()"
+          [disabled]="selectedCount() === 0 || isEditing()"
+          class="rounded-lg bg-brand-500 hover:bg-brand-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-gray-400 text-white font-medium text-sm px-5 py-2.5 transition shadow-sm">
+          Submit Transaction
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-5 py-4 dark:border-gray-800 dark:bg-white/[0.02]">
-    <div class="text-sm text-gray-500">
-      Items in transaction: <strong>{{ selectedCount() }}</strong>
+  <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 px-5 py-4 dark:border-gray-800 gap-4">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Transaction Revenue History</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Review processed operations log and real revenue records</p>
+      </div>
+      
+      <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 rounded-xl px-4 py-2.5 flex flex-col justify-center items-end min-w-[200px]">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Total Accumulated Revenue</span>
+        <span class="text-xl font-extrabold text-green-600 dark:text-green-400">
+          {{ cumulativeRevenue() | currency:'PHP':'symbol-narrow' }}
+        </span>
+      </div>
     </div>
-    <div class="text-right">
-      <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Expected Revenue</p>
-      <p class="text-2xl font-bold text-brand-500">
-        {{ totalToSell() | currency:'PHP':'symbol-narrow' }}
-      </p>
+
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto">
+        <thead>
+          <tr class="border-b border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.01]">
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Transaction ID</th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Date & Time</th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Breakdown Items</th>
+            <th class="p-4 text-center text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Total Units</th>
+            <th class="p-4 text-right text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Total Revenue</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+          @if (completedTransactions().length === 0) {
+            <tr>
+              <td colspan="5" class="p-8 text-center text-sm text-gray-400 dark:text-gray-500">
+                No transactions submitted yet. Process items above to populate logs.
+              </td>
+            </tr>
+          }
+          @for (tx of completedTransactions(); track tx.id) {
+            <tr class="hover:bg-gray-50/60 dark:hover:bg-gray-900/40 transition">
+              <td class="p-4 text-sm font-mono font-bold text-gray-700 dark:text-gray-300">
+                {{ tx.id }}
+              </td>
+              <td class="p-4 text-sm text-gray-600 dark:text-gray-400">
+                {{ tx.timestamp | date:'medium' }}
+              </td>
+              <td class="p-4 text-xs text-gray-600 dark:text-gray-400 max-w-xs">
+                <div class="flex flex-wrap gap-1.5">
+                  @for (detail of tx.details; track detail.productName) {
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+                      {{ detail.productName }} (x{{ detail.qtySold }})
+                    </span>
+                  }
+                </div>
+              </td>
+              <td class="p-4 text-center text-sm text-gray-700 dark:text-gray-300 font-semibold">
+                {{ tx.itemsCount }}
+              </td>
+              <td class="p-4 text-right text-sm font-bold text-green-600 dark:text-green-400">
+                {{ tx.totalRevenue | currency:'PHP':'symbol-narrow' }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
