@@ -5,28 +5,46 @@
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Inventory Management</h3>
         <p class="text-sm text-gray-500 dark:text-gray-400">Manage stock and prepare sales</p>
       </div>
-      <button 
-        (click)="toggleEdit()"
-        [class]="isEditing() ? 'bg-green-600 hover:bg-green-700' : 'bg-brand-500 hover:bg-brand-600'"
-        class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition shadow-sm">
-        <span>{{ isEditing() ? 'Save Changes' : 'Edit Stock & Prices' }}</span>
-      </button>
+      <div class="flex items-center gap-4">
+        <input 
+          type="text" 
+          placeholder="Search by name or SKU..."
+          [ngModel]="searchTerm()"
+          (ngModelChange)="searchTerm.set($event)"
+          class="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm focus:border-brand-500"
+        />
+
+        <button 
+          (click)="toggleEdit()"
+          [class]="isEditing() ? 'bg-green-600 hover:bg-green-700' : 'bg-brand-500 hover:bg-brand-600'"
+          class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition shadow-sm">
+          <span>{{ isEditing() ? 'Save Changes' : 'Edit Stock & Prices' }}</span>
+        </button>
+      </div>
     </div>
 
     <div class="overflow-x-auto">
       <table class="w-full table-auto">
         <thead>
           <tr class="border-b border-gray-200 dark:border-gray-800">
-            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Product</th>
-            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Stock Level</th>
-            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Stock Updated</th>
-            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Unit Price</th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase cursor-pointer hover:text-brand-500 transition-colors" (click)="setSort('name')">
+              Product @if(sortColumn() === 'name') { <span>{{sortDirection() === 'asc' ? '↑' : '↓'}}</span> }
+            </th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase cursor-pointer hover:text-brand-500 transition-colors" (click)="setSort('stock')">
+              Stock Level @if(sortColumn() === 'stock') { <span>{{sortDirection() === 'asc' ? '↑' : '↓'}}</span> }
+            </th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase cursor-pointer hover:text-brand-500 transition-colors" (click)="setSort('lastUpdated')">
+              Stock Updated @if(sortColumn() === 'lastUpdated') { <span>{{sortDirection() === 'asc' ? '↑' : '↓'}}</span> }
+            </th>
+            <th class="p-4 text-left text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase cursor-pointer hover:text-brand-500 transition-colors" (click)="setSort('price')">
+              Unit Price @if(sortColumn() === 'price') { <span>{{sortDirection() === 'asc' ? '↑' : '↓'}}</span> }
+            </th>
             <th class="p-4 text-center text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Qty to Sell</th>
             <th class="p-4 text-right text-theme-xs font-medium text-gray-700 dark:text-gray-400 uppercase">Subtotal</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-          @for (product of products(); track product.id) {
+          @for (product of filteredProducts(); track product.id) {
             <tr class="transition hover:bg-gray-50 dark:hover:bg-gray-900">
               <td class="p-4">
                 <p class="text-sm font-semibold text-gray-800 dark:text-white/90">{{product.name}}</p>
@@ -38,7 +56,7 @@
                   <input 
                     type="number" 
                     [ngModel]="product.stock"
-                    (ngModelChange)="updateBaseStock($index, $event)"
+                    (ngModelChange)="updateBaseStock(product.id, $event)"
                     class="w-24 rounded-md border border-brand-200 bg-brand-50/50 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                   />
                 } @else {
@@ -69,7 +87,7 @@
                     <input 
                       type="number" 
                       [ngModel]="product.price"
-                      (ngModelChange)="updateUnitPrice($index, $event)"
+                      (ngModelChange)="updateUnitPrice(product.id, $event)"
                       class="w-28 rounded-md border border-brand-200 bg-brand-50/50 pl-5 pr-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     />
                   </div>
@@ -84,18 +102,25 @@
                   </div>
                 }
               </td>
-              
               <td class="p-4">
                 <div class="flex items-center justify-center gap-3">
                   <button 
-                    (click)="updateQty($index, -1)"
+                    (click)="updateQty(product.id, -1)"
                     [disabled]="isEditing()"
                     class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
                     -
                   </button>
-                  <span class="w-8 text-center text-sm font-bold dark:text-white">{{product.toSell}}</span>
+                  
+                  <input 
+                    type="number" 
+                    min="0"
+                    [ngModel]="product.toSell" 
+                    (ngModelChange)="setQty(product.id, $event)"
+                    class="w-16 text-center rounded-md border border-gray-300 py-1 text-sm font-bold dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                  />
+                  
                   <button 
-                    (click)="updateQty($index, 1)"
+                    (click)="updateQty(product.id, 1)"
                     [disabled]="isEditing() || product.toSell >= product.stock"
                     class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
                     +
@@ -132,7 +157,6 @@
       </div>
     </div>
   </div>
-
   <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 px-5 py-4 dark:border-gray-800 gap-4">
       <div>
@@ -196,4 +220,4 @@
       </table>
     </div>
   </div>
-</div>
+  </div>
