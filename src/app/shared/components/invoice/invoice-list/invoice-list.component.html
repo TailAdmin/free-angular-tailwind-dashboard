@@ -44,90 +44,48 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-          @for (product of filteredProducts(); track product.id) {
+          @for (product of paginatedProducts(); track product.id) {
             <tr class="transition hover:bg-gray-50 dark:hover:bg-gray-900">
               <td class="p-4">
                 <p class="text-sm font-semibold text-gray-800 dark:text-white/90">{{product.name}}</p>
                 <p class="text-xs text-gray-500">{{product.sku}}</p>
               </td>
-              
               <td class="p-4">
                 @if (isEditing()) {
-                  <input 
-                    type="number" 
-                    [ngModel]="product.stock"
-                    (ngModelChange)="updateBaseStock(product.id, $event)"
-                    class="w-24 rounded-md border border-brand-200 bg-brand-50/50 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
+                  <input type="number" [ngModel]="product.stock" (ngModelChange)="updateBaseStock(product.id, $event)" class="w-24 rounded-md border border-brand-200 bg-brand-50/50 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"/>
                 } @else {
                   <div class="flex flex-col">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                      {{ product.stock }} total
-                    </span>
-                    <span 
-                      [ngClass]="(product.stock - product.toSell) < 10 ? 'text-red-500 font-bold' : 'text-gray-400'" 
-                      class="text-[10px] uppercase">
-                      Available: {{ product.stock - product.toSell }}
-                    </span>
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ product.stock }} total</span>
+                    <span [ngClass]="(product.stock - product.toSell) < 10 ? 'text-red-500 font-bold' : 'text-gray-400'" class="text-[10px] uppercase">Available: {{ product.stock - product.toSell }}</span>
                   </div>
                 }
               </td>
-
               <td class="p-4 text-sm text-gray-600 dark:text-gray-400">
                 <div class="flex flex-col">
                   <span class="font-medium text-gray-700 dark:text-gray-300">{{ product.lastUpdated | date:'MMM d, yyyy' }}</span>
                   <span class="text-xs text-gray-400">{{ product.lastUpdated | date:'shortTime' }}</span>
                 </div>
               </td>
-
               <td class="p-4 text-sm text-gray-700 dark:text-gray-400">
                 @if (isEditing()) {
                   <div class="relative flex items-center">
                     <span class="absolute left-2 text-xs text-gray-400">₱</span>
-                    <input 
-                      type="number" 
-                      [ngModel]="product.price"
-                      (ngModelChange)="updateUnitPrice(product.id, $event)"
-                      class="w-28 rounded-md border border-brand-200 bg-brand-50/50 pl-5 pr-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                    />
+                    <input type="number" [ngModel]="product.price" (ngModelChange)="updateUnitPrice(product.id, $event)" class="w-28 rounded-md border border-brand-200 bg-brand-50/50 pl-5 pr-2 py-1 text-sm focus:border-brand-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"/>
                   </div>
                 } @else {
                   <div class="flex flex-col">
-                    <span class="font-medium text-gray-800 dark:text-white/90">
-                      {{ product.price | currency:'PHP':'symbol-narrow' }}
-                    </span>
-                    <span class="text-[10px] text-gray-400">
-                      Updated: {{ product.priceLastUpdated | date:'MM/dd/yy h:mm a' }}
-                    </span>
+                    <span class="font-medium text-gray-800 dark:text-white/90">{{ product.price | currency:'PHP':'symbol-narrow' }}</span>
+                    <span class="text-[10px] text-gray-400">Updated: {{ product.priceLastUpdated | date:'MM/dd/yy h:mm a' }}</span>
                   </div>
                 }
               </td>
               <td class="p-4">
                 <div class="flex items-center justify-center gap-3">
-                  <button 
-                    (click)="updateQty(product.id, -1)"
-                    [disabled]="isEditing()"
-                    class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
-                    -
-                  </button>
-                  
-                  <input 
-                    type="number" 
-                    min="0"
-                    [ngModel]="product.toSell" 
-                    (ngModelChange)="setQty(product.id, $event)"
-                    class="w-16 text-center rounded-md border border-gray-300 py-1 text-sm font-bold dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
-                  
-                  <button 
-                    (click)="updateQty(product.id, 1)"
-                    [disabled]="isEditing() || product.toSell >= product.stock"
-                    class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">
-                    +
-                  </button>
+                  <button (click)="updateQty(product.id, -1)" [disabled]="isEditing()" class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">-</button>
+                  <input type="number" min="0" [ngModel]="product.toSell" (ngModelChange)="setQty(product.id, $event)" class="w-16 text-center rounded-md border border-gray-300 py-1 text-sm font-bold dark:border-gray-700 dark:bg-gray-800 dark:text-white"/>
+                  <button (click)="updateQty(product.id, 1)" [disabled]="isEditing() || product.toSell >= product.stock" class="flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-30 dark:border-gray-700 dark:bg-gray-800">+</button>
                 </div>
               </td>
-
               <td class="p-4 text-right text-sm font-medium text-gray-800 dark:text-white">
                 {{ (product.price * product.toSell) | currency:'PHP':'symbol-narrow' }}
               </td>
@@ -137,23 +95,32 @@
       </table>
     </div>
 
-    <div class="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-5 py-4 dark:border-gray-800 dark:bg-white/[0.02]">
-      <div class="text-sm text-gray-500">
-        Items in transaction: <strong>{{ selectedCount() }}</strong>
+    <div class="flex items-center justify-between border-t border-gray-200 px-5 py-4 dark:border-gray-800">
+      <div class="flex items-center gap-2 text-sm text-gray-500">
+        <span>Rows per page:</span>
+        <select (change)="changePageSize($event)" class="rounded-lg border border-gray-200 bg-gray-50 px-2 py-1 focus:border-brand-500 dark:bg-gray-800 dark:border-gray-700">
+          <option value="5" [selected]="pageSize() === 5">5</option>
+          <option value="10" [selected]="pageSize() === 10">10</option>
+          <option value="25" [selected]="pageSize() === 25">25</option>
+          <option value="50" [selected]="pageSize() === 50">50</option>
+        </select>
       </div>
+      <div class="flex items-center gap-4">
+        <span class="text-sm text-gray-500">Page {{ currentPage() }} of {{ Math.ceil(filteredProducts().length / pageSize()) || 1 }}</span>
+        <div class="flex gap-2">
+          <button [disabled]="currentPage() === 1" (click)="changePage(currentPage() - 1)" class="px-3 py-1 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-30 dark:border-gray-700">Previous</button>
+          <button [disabled]="currentPage() * pageSize() >= filteredProducts().length" (click)="changePage(currentPage() + 1)" class="px-3 py-1 border border-gray-200 rounded-lg hover:bg-gray-50 disabled:opacity-30 dark:border-gray-700">Next</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-between border-t border-gray-200 bg-gray-50 px-5 py-4 dark:border-gray-800 dark:bg-white/[0.02]">
+      <div class="text-sm text-gray-500">Items in transaction: <strong>{{ selectedCount() }}</strong></div>
       <div class="flex items-center gap-6">
         <div class="text-right">
           <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Expected Revenue</p>
-          <p class="text-2xl font-bold text-brand-500">
-            {{ totalToSell() | currency:'PHP':'symbol-narrow' }}
-          </p>
+          <p class="text-2xl font-bold text-brand-500">{{ totalToSell() | currency:'PHP':'symbol-narrow' }}</p>
         </div>
-        <button 
-          (click)="submitTransaction()"
-          [disabled]="selectedCount() === 0 || isEditing()"
-          class="rounded-lg bg-brand-500 hover:bg-brand-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-gray-400 text-white font-medium text-sm px-5 py-2.5 transition shadow-sm">
-          Submit Transaction
-        </button>
+        <button (click)="submitTransaction()" [disabled]="selectedCount() === 0 || isEditing()" class="rounded-lg bg-brand-500 hover:bg-brand-600 disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-gray-400 text-white font-medium text-sm px-5 py-2.5 transition shadow-sm">Submit Transaction</button>
       </div>
     </div>
   </div>

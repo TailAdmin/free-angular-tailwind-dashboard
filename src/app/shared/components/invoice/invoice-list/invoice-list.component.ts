@@ -1,17 +1,7 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface Product {
-  id: number;
-  name: string;
-  sku: string;
-  price: number;
-  stock: number;
-  toSell: number;
-  lastUpdated: Date;
-  priceLastUpdated: Date;
-}
+import { ProductService, Product } from '../../../services/product.service';
 
 interface Transaction {
   id: string;
@@ -28,32 +18,28 @@ interface Transaction {
   templateUrl: './invoice-list.component.html',
 })
 export class InvoiceListComponent {
+  private productService = inject(ProductService);
+  
+  // Expose Math to the template for page calculations
+  public Math = Math;
+  
   public isEditing = signal<boolean>(false);
   public searchTerm = signal<string>('');
-  
-  // Sorting Signals
   public sortColumn = signal<keyof Product | null>(null);
   public sortDirection = signal<'asc' | 'desc'>('asc');
+  
+  // Pagination signals
+  public currentPage = signal<number>(1);
+  public pageSize = signal<number>(5);
 
-  public products = signal<Product[]>([
-    { id: 1, name: 'Premium watches', sku: 'BP-001', price: 1250.00, stock: 45, toSell: 0, lastUpdated: new Date('2026-05-10T09:30:00'), priceLastUpdated: new Date('2026-05-10T09:30:00') },
-    { id: 2, name: 'Premium bags', sku: 'EO-102', price: 2800.00, stock: 12, toSell: 0, lastUpdated: new Date('2026-05-12T14:15:00'), priceLastUpdated: new Date('2026-05-12T14:15:00') },
-    { id: 3, name: 'Air cooler', sku: 'AF-552', price: 450.00, stock: 30, toSell: 0, lastUpdated: new Date('2026-05-15T11:00:00'), priceLastUpdated: new Date('2026-05-15T11:00:00') },
-    { id: 4, name: 'Wireless Mouse', sku: 'WM-889', price: 850.00, stock: 100, toSell: 0, lastUpdated: new Date('2026-05-18T08:00:00'), priceLastUpdated: new Date('2026-05-18T08:00:00') },
-    { id: 5, name: 'Mechanical Keyboard', sku: 'KB-202', price: 3200.00, stock: 25, toSell: 0, lastUpdated: new Date('2026-05-19T10:45:00'), priceLastUpdated: new Date('2026-05-19T10:45:00') },
-    { id: 6, name: 'USB-C Cable', sku: 'CB-110', price: 150.00, stock: 200, toSell: 0, lastUpdated: new Date('2026-05-20T12:00:00'), priceLastUpdated: new Date('2026-05-20T12:00:00') },
-    { id: 7, name: 'Noise Cancelling Headphones', sku: 'NC-404', price: 5500.00, stock: 15, toSell: 0, lastUpdated: new Date('2026-05-21T09:15:00'), priceLastUpdated: new Date('2026-05-21T09:15:00') },
-    { id: 8, name: 'Desk Lamp', sku: 'DL-990', price: 950.00, stock: 40, toSell: 0, lastUpdated: new Date('2026-05-21T14:30:00'), priceLastUpdated: new Date('2026-05-21T14:30:00') },
-  ]);
-
+  public products = this.productService.allProducts;
   public completedTransactions = signal<Transaction[]>([]);
 
-  // Combined Filtering AND Sorting Logic
+  // Filtering & Sorting Logic
   public filteredProducts = computed(() => {
     const term = this.searchTerm().toLowerCase();
     let data = [...this.products().filter(p => 
-      p.name.toLowerCase().includes(term) || 
-      p.sku.toLowerCase().includes(term)
+      p.name.toLowerCase().includes(term) || p.sku.toLowerCase().includes(term)
     )];
 
     const col = this.sortColumn();
@@ -61,23 +47,25 @@ export class InvoiceListComponent {
       data.sort((a, b) => {
         let valA: any = a[col];
         let valB: any = b[col];
-        
-        // Handle Date objects for sorting
         if (valA instanceof Date) valA = valA.getTime();
         if (valB instanceof Date) valB = valB.getTime();
-        
-        if (valA < valB) return this.sortDirection() === 'asc' ? -1 : 1;
-        if (valA > valB) return this.sortDirection() === 'asc' ? 1 : -1;
-        return 0;
+        return this.sortDirection() === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
       });
     }
     return data;
   });
 
+  // Paginated View
+  public paginatedProducts = computed(() => {
+    return this.productService.getPagedData(this.filteredProducts(), this.currentPage(), this.pageSize());
+  });
+
+  // Revenue computations
   public totalToSell = computed(() => this.products().reduce((acc, p) => acc + (p.price * p.toSell), 0));
   public selectedCount = computed(() => this.products().filter(p => p.toSell > 0).length);
   public cumulativeRevenue = computed(() => this.completedTransactions().reduce((acc, tx) => acc + tx.totalRevenue, 0));
 
+  // Methods
   toggleEdit() { this.isEditing.set(!this.isEditing()); }
 
   setSort(column: keyof Product) {
@@ -89,18 +77,34 @@ export class InvoiceListComponent {
     }
   }
 
+  // Pagination Controls
+  changePage(page: number) { this.currentPage.set(page); }
+
+  changePageSize(event: Event) {
+    const size = parseInt((event.target as HTMLSelectElement).value, 10);
+    this.pageSize.set(size);
+    this.currentPage.set(1); // Reset to first page whenever size changes
+  }
+
   private findProductIndex(id: number): number { return this.products().findIndex(p => p.id === id); }
 
   updateQty(productId: number, change: number) {
     const index = this.findProductIndex(productId);
     this.products.update(prev => {
       const updated = [...prev];
-      const product = { ...updated[index] };
-      const newQty = product.toSell + change;
-      if (newQty >= 0 && newQty <= product.stock) {
-        product.toSell = newQty;
-        updated[index] = product;
+      if (updated[index].toSell + change >= 0 && updated[index].toSell + change <= updated[index].stock) {
+        updated[index] = { ...updated[index], toSell: updated[index].toSell + change };
       }
+      return updated;
+    });
+  }
+
+  setQty(productId: number, newQty: number | null) {
+    const quantity = Math.max(0, newQty ?? 0);
+    const index = this.findProductIndex(productId);
+    this.products.update(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], toSell: Math.min(quantity, updated[index].stock) };
       return updated;
     });
   }
@@ -124,8 +128,7 @@ export class InvoiceListComponent {
   }
 
   submitTransaction() {
-    const currentProducts = this.products();
-    const activeSales = currentProducts.filter(p => p.toSell > 0);
+    const activeSales = this.products().filter(p => p.toSell > 0);
     if (activeSales.length === 0) return;
 
     const newTransaction: Transaction = {
@@ -138,24 +141,5 @@ export class InvoiceListComponent {
 
     this.products.update(prev => prev.map(p => p.toSell > 0 ? { ...p, stock: p.stock - p.toSell, toSell: 0, lastUpdated: new Date() } : p));
     this.completedTransactions.update(prev => [newTransaction, ...prev]);
-  }
-
-  setQty(productId: number, newQty: number | null) {
-    // Coerce null/undefined to 0, then ensure it's not negative
-    const quantity = Math.max(0, newQty ?? 0); 
-    const index = this.findProductIndex(productId);
-    
-    this.products.update(prev => {
-      const updated = [...prev];
-      const product = { ...updated[index] };
-  
-      // Cap at available stock
-      const validatedQty = Math.min(quantity, product.stock);
-      
-      product.toSell = validatedQty;
-      updated[index] = product;
-      
-      return updated;
-    });
   }
 }
