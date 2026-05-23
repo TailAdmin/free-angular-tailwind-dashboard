@@ -11,6 +11,7 @@ interface Transaction {
   details: { productName: string; qtySold: number; subtotal: number }[];
 }
 
+
 @Component({
   selector: 'app-invoice-list',
   standalone: true,
