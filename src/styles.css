@@ -3,6 +3,10 @@ layer(base);
 
 @import "tailwindcss";
 @import "swiper/css/bundle";
+@import "flatpickr/dist/flatpickr.css";
+@import "fullcalendar/skeleton.css";
+@import "fullcalendar/themes/classic/theme.css";
+@import "fullcalendar/themes/classic/palette.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -558,7 +562,13 @@ span.flatpickr-weekday,
 }
 
 .flatpickr-calendar.static {
-  @apply right-0;
+  @apply left-0 right-auto rtl:left-auto rtl:right-0;
+}
+.flatpickr-calendar.static.flatpickr-right {
+  @apply right-0 left-auto rtl:right-auto rtl:left-0;
+}
+.flatpickr-calendar.static.flatpickr-left {
+  @apply left-0 right-auto rtl:left-auto rtl:right-0;
 }
 .flatpickr-calendar.hasTime {
   width: 300px !important;
@@ -756,7 +766,23 @@ span.flatpickr-weekday,
 }
 
 .form-check-input:checked ~ span {
-  @apply border-[6px] border-brand-500 bg-brand-500 dark:border-brand-500;
+  @apply border-[6px] border-brand-500 bg-white dark:bg-gray-900 dark:border-brand-500;
+}
+
+.form-check-danger .form-check-input:checked ~ span {
+  @apply border-error-500 dark:border-error-500;
+}
+
+.form-check-success .form-check-input:checked ~ span {
+  @apply border-success-500 dark:border-success-500;
+}
+
+.form-check-primary .form-check-input:checked ~ span {
+  @apply border-brand-500 dark:border-brand-500;
+}
+
+.form-check-warning .form-check-input:checked ~ span {
+  @apply border-orange-500 dark:border-orange-500;
 }
 
 .taskCheckbox:checked ~ .box span {
@@ -788,6 +814,112 @@ span.flatpickr-weekday,
 }
 .fc.fc-media-screen {
   @apply min-h-screen;
+}
+
+/* yearly calender css start */
+/* FullCalendar MultiMonth (Year View) */
+.fc-multimonth {
+  @apply grid! grid-cols-1 gap-6 border-x-0! p-6 sm:grid-cols-2 lg:grid-cols-3;
+  background: transparent;
+}
+
+.fc-multimonth-month {
+  @apply w-full! rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900/50;
+}
+
+.fc-multimonth-title {
+  @apply py-2! text-center! text-base! font-semibold! text-gray-800 dark:text-white/90;
+}
+
+.fc-multimonth-header {
+  @apply border-gray-200! dark:border-gray-800!;
+}
+
+.fc-multimonth-header th {
+  @apply border-0! bg-transparent! py-2! text-center!;
+}
+
+.fc-multimonth-header .fc-col-header-cell-cushion {
+  @apply p-0! text-xs! font-medium text-gray-400 dark:text-gray-500;
+}
+
+.fc-multimonth-daygrid-table {
+  @apply border-none!;
+}
+
+.fc-multimonth-daygrid-table td {
+  @apply border-none!;
+}
+
+.fc-multimonth-day {
+  @apply p-0.5!;
+}
+
+.fc-multimonth .fc-daygrid-day-frame {
+  @apply min-h-14 rounded-md p-1 transition-colors hover:bg-gray-50 sm:min-h-16 dark:hover:bg-white/5;
+}
+
+.fc-multimonth .fc-daygrid-day-number {
+  @apply p-0.5! text-xs font-medium text-gray-700 dark:text-gray-400;
+}
+
+.fc-multimonth .fc-daygrid-day.fc-day-today .fc-daygrid-day-frame {
+  @apply rounded-md bg-brand-50/60 font-semibold text-brand-500 dark:bg-brand-500/10 dark:text-brand-400;
+}
+
+.fc-multimonth .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  @apply font-semibold text-brand-500 dark:text-brand-400;
+}
+
+.fc .fc-cell-shaded,
+.fc .fc-day-disabled,
+.fc .fc-day-other,
+.fc-multimonth .fc-day-other .fc-daygrid-day-frame,
+.fc-multimonth .fc-day-disabled .fc-daygrid-day-frame {
+  @apply bg-transparent! hover:bg-transparent!;
+}
+
+.fc-daygrid-more-link {
+  @apply border-0! bg-transparent! p-0!;
+}
+
+.fc-more-link-badge {
+  @apply inline-flex items-center rounded-sm bg-brand-50 px-1.5 py-0.5 text-xs font-medium text-brand-600 transition-colors hover:bg-brand-100 dark:bg-brand-500/15 dark:text-brand-400 dark:hover:bg-brand-500/25;
+}
+
+.fc-multimonth .event-fc-color {
+  @apply my-0.5 rounded py-0.5 ps-1.5 pe-1 text-xs;
+}
+
+.fc-multimonth .event-fc-color .fc-daygrid-event-dot {
+  @apply me-1 h-2 w-2 rounded-full;
+}
+
+.fc-multimonth .event-fc-color .fc-event-title {
+  @apply truncate text-xs;
+}
+
+/* FullCalendar Popover */
+.fc .fc-popover,
+.fc-theme-standard .fc-popover {
+  @apply z-99999! rounded-xl border border-gray-200 bg-white shadow-xl dark:border-gray-700 dark:bg-gray-900;
+}
+
+.fc .fc-popover-header,
+.fc-theme-standard .fc-popover-header {
+  @apply flex items-center justify-between border-b border-gray-200 bg-transparent px-3.5 py-2.5 dark:border-gray-800 dark:bg-transparent;
+}
+
+.fc .fc-popover-title {
+  @apply text-sm font-semibold text-gray-800 dark:text-white/90;
+}
+
+.fc .fc-popover-close {
+  @apply flex h-6 w-6 cursor-pointer items-center justify-center rounded-lg text-gray-400 opacity-100 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white;
+}
+
+.fc .fc-popover-body {
+  @apply space-y-1.5 p-2.5;
 }
 
 .simplebar-scrollbar::before {
@@ -864,4 +996,62 @@ pre[class*="language-"] {
 }
 pre[class*="language-"].line-numbers {
   padding-left: 2.8em !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+/* ==========================================================================
+   RTL Overrides & Localization Utilities
+   ========================================================================== */
+
+[dir="rtl"] .custom-datepicker .flatpickr-calendar.static.open {
+  left: 0 !important;
+  right: auto !important;
+}
+
+[dir="rtl"] .flatpickr-calendar.arrowTop:before,
+[dir="rtl"] .flatpickr-calendar.arrowTop:after {
+  left: 22px;
+  right: auto;
+}
+
+/* Flatpickr arrows stay natural */
+
+[dir="rtl"] .apexcharts-tooltip {
+  direction: rtl;
+  text-align: right;
+}
+
+/* end apexcharts rtl overrides */
+/* amCharts 5 RTL & SVG text alignment fixes */
+[dir="rtl"] div[id*="chartdiv"],
+[dir="rtl"] .am5-layer-30,
+[dir="rtl"] .am5-tooltip-container,
+[dir="rtl"] app-country-map,
+[dir="rtl"] app-traffic-analytics-map,
+[dir="rtl"] app-customer-pin-point-map,
+[dir="rtl"] app-global-user-map,
+[dir="rtl"] .mapOne,
+[dir="rtl"] .mapTwo {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+[dir="rtl"] div[class*="am5-"] svg text,
+[dir="rtl"] div[class*="am5-"] text {
+  direction: ltr !important;
+  unicode-bidi: embed;
 }

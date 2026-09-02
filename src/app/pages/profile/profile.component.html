@@ -1,11 +1,124 @@
-<app-page-breadcrumb pageTitle="Profile" />
-<div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
-  <h3 class="mb-5 text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-7">
-    Profile
+<app-page-breadcrumb pageTitle="User Profile" />
+
+<div class="rounded-2xl border border-gray-200 bg-white p-5 lg:p-6 dark:border-gray-800 dark:bg-white/[0.03]">
+  <h3 class="mb-5 text-lg font-semibold text-gray-800 lg:mb-7 dark:text-white/90">
+    My Profile
   </h3>
-  <div class="space-y-6">
-    <div><app-user-meta-card/></div>
-    <div><app-user-info-card/></div>
-    <div><app-user-address-card/></div>
+
+  <!-- Info -->
+  <app-user-meta-card />
+
+  <!-- Address -->
+  <app-user-address-card />
+
+  <!-- Security -->
+  <div class="mb-6 rounded-2xl border border-gray-200 p-5 lg:p-6 dark:border-gray-800">
+    <h4 class="text-lg font-semibold text-gray-800 lg:mb-6 dark:text-white/90">
+      Security
+    </h4>
+    <div>
+      <div
+        class="flex flex-col justify-between gap-4 border-b border-gray-200 py-4 first:pt-0 last:border-b-0 last:pb-0 sm:flex-row sm:items-end dark:border-gray-800">
+        <div>
+          <span class="mb-1 block text-base font-medium text-gray-800 dark:text-white/90">Change Password</span>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Receive real-time notifications and team alerts.
+          </p>
+        </div>
+        <div>
+          <button
+            class="shadow-theme-xs flex h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-2.5 ltr:pr-4 ltr:pl-3.5 rtl:pl-4 rtl:pr-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3 dark:hover:text-gray-200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M12.3861 5.08087L14.9182 7.61296M15.6437 3.5917L16.408 4.35603C16.8962 4.84419 16.8962 5.63564 16.408 6.1238L7.83547 14.6963C7.69039 14.8414 7.51182 14.9486 7.31554 15.0083L3.97461 16.0251L4.99141 12.6842C5.05115 12.4879 5.15829 12.3093 5.30337 12.1642L13.8759 3.5917C14.3641 3.10355 15.1555 3.10355 15.6437 3.5917Z"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Change Password
+          </button>
+        </div>
+      </div>
+      <div
+        class="flex flex-col justify-between gap-4 border-b border-gray-200 py-4 first:pt-0 last:border-b-0 last:pb-0 sm:flex-row sm:items-end dark:border-gray-800">
+        <div>
+          <span class="mb-1 block text-base font-medium text-gray-800 dark:text-white/90">Two-factor authentication
+            (2FA)</span>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Keep your account secure by enabling 2FA
+          </p>
+        </div>
+        <div>
+          <label
+            for="toggle1"
+            class="flex cursor-pointer items-center gap-3 text-sm font-medium text-gray-700 select-none dark:text-gray-400"
+          >
+            <div class="relative">
+              <input
+                type="checkbox"
+                id="toggle1"
+                class="sr-only"
+                [(ngModel)]="twoFactorEnabled"
+              />
+              <div
+                class="block h-5 w-9 rounded-full"
+                [ngClass]="twoFactorEnabled ? 'bg-brand-500 dark:bg-brand-500' : 'bg-gray-200 dark:bg-white/10'"
+              ></div>
+              <div
+                [ngClass]="twoFactorEnabled ? 'ltr:translate-x-full rtl:-translate-x-full': 'translate-x-0'"
+                class="shadow-theme-sm absolute top-0.5 ltr:left-0.5 rtl:right-0.5 h-4 w-4 rounded-full bg-white duration-200 ease-linear"
+              ></div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Danger Zone -->
+  <div class="mb-6 rounded-2xl border border-gray-200 p-5 lg:p-6 dark:border-gray-800">
+    <h4 class="text-lg font-semibold text-gray-800 lg:mb-6 dark:text-white/90">
+      Danger Zone
+    </h4>
+    <div>
+      <div
+        class="flex flex-col justify-between gap-4 border-b border-gray-200 py-4 first:pt-0 last:border-b-0 last:pb-0 sm:flex-row sm:items-end dark:border-gray-800">
+        <div>
+          <span class="mb-1 block text-base font-medium text-gray-800 dark:text-white/90">Logout all devices</span>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Sign out from every active session.
+          </p>
+        </div>
+        <div>
+          <button
+            class="shadow-theme-xs flex h-10 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-2.5 ltr:pr-4 ltr:pl-3.5 rtl:pl-4 rtl:pr-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3 dark:hover:text-gray-200">
+            <svg class="rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M3.33325 10.0003L9.79159 10.0003M6.66599 6.66699L3.33488 10.0002L6.66599 13.3337M8.12492 4.16374V3.54199C8.12492 2.85164 8.68456 2.29199 9.37492 2.29199H14.3749C15.0653 2.29199 15.6249 2.85164 15.6249 3.54199V16.4587C15.6249 17.149 15.0653 17.7087 14.3749 17.7087H9.37492C8.68456 17.7087 8.12492 17.149 8.12492 16.4587V15.8337"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Logout all devices
+          </button>
+        </div>
+      </div>
+      <div
+        class="flex flex-col justify-between gap-4 border-b border-gray-200 py-4 first:pt-0 last:border-b-0 last:pb-0 sm:flex-row sm:items-end dark:border-gray-800">
+        <div>
+          <span class="mb-1 block text-base font-medium text-gray-800 dark:text-white/90">Delete account</span>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            Sign out from every active session.
+          </p>
+        </div>
+        <div>
+          <button
+            class="border-error-500 text-error-500 hover:bg-error-100 dark:border-error-500/15 inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border px-3.5 py-2.5 ltr:pr-4 ltr:pl-3.5 rtl:pl-4 rtl:pr-3.5 text-sm font-medium transition-all dark:hover:bg-red-500/15">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M4.37492 4.79199V16.4587C4.37492 17.149 4.93456 17.7087 5.62492 17.7087H14.3749C15.0653 17.7087 15.6249 17.149 15.6249 16.4587V4.79199M3.33325 4.79199H16.6658M4.37492 13.2466V8.24658M15.6249 13.2466V8.24658M8.33325 13.7503V8.75033M11.6666 13.7503V8.75033M12.7078 4.79199V3.54199C12.7078 2.85164 12.1482 2.29199 11.4578 2.29199H8.54118C7.85082 2.29199 7.29118 2.85164 7.29118 3.54199V4.79199H12.7078Z"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Delete account
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

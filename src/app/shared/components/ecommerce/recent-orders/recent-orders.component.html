@@ -31,19 +31,19 @@
   </div>
 
   <div class="max-w-full overflow-x-auto">
-    <table class="w-full text-left">
+    <table class="w-full text-start">
       <thead class="border-y border-gray-100 dark:border-gray-800">
         <tr>
-          <th class="py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400">Products</th>
-          <th class="py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400">Category</th>
-          <th class="py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400">Price</th>
-          <th class="py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400">Status</th>
+          <th class="py-3 font-medium text-start text-gray-500 text-theme-xs dark:text-gray-400">Products</th>
+          <th class="py-3 font-medium text-start text-gray-500 text-theme-xs dark:text-gray-400">Category</th>
+          <th class="py-3 font-medium text-start text-gray-500 text-theme-xs dark:text-gray-400">Price</th>
+          <th class="py-3 font-medium text-start text-gray-500 text-theme-xs dark:text-gray-400">Status</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
         @for (product of tableData; track $index) {
         <tr>
-          <td class="py-3">
+          <td class="py-3 text-start">
             <div class="flex items-center gap-3">
               <div class="h-[50px] w-[50px] overflow-hidden rounded-md">
                 <img [src]="product.image" [alt]="product.name" class="h-[50px] w-[50px]" />
@@ -58,13 +58,13 @@
               </div>
             </div>
           </td>
-          <td class="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+          <td class="py-3 text-start text-gray-500 text-theme-sm dark:text-gray-400">
             {{ product.category }}
           </td>
-          <td class="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+          <td class="py-3 text-start text-gray-500 text-theme-sm dark:text-gray-400">
             {{ product.price }}
           </td>
-          <td class="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+          <td class="py-3 text-start text-gray-500 text-theme-sm dark:text-gray-400">
             <app-badge size="sm" [color]="getBadgeColor(product.status)">
               {{ product.status }}
             </app-badge>

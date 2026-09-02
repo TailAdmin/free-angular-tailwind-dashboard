@@ -14,8 +14,8 @@ import { FormsModule } from '@angular/forms';
     ButtonComponent,
     LabelComponent,
     ModalComponent,
-    FormsModule
-],
+    FormsModule,
+  ],
   templateUrl: './user-address-card.component.html',
   styles: ``
 })
@@ -23,20 +23,19 @@ export class UserAddressCardComponent {
 
   constructor(public modal: ModalService) {}
 
-  isOpen = false;
-  openModal() { this.isOpen = true; }
-  closeModal() { this.isOpen = false; }
+  isAddressModalOpen = false;
+  openAddressModal() { this.isAddressModalOpen = true; }
+  closeAddressModal() { this.isAddressModalOpen = false; }
 
   address = {
-    country: 'United States.',
-    cityState: 'Phoenix, Arizona, United States.',
+    country: 'United States',
+    cityState: 'Arizona, United States.',
     postalCode: 'ERT 2489',
     taxId: 'AS4568384',
   };
 
-  handleSave() {
-    // Handle save logic here
-    console.log('Saving changes...');
-    this.modal.closeModal();
+  handleAddressSave() {
+    console.log('Saving address changes:', this.address);
+    this.closeAddressModal();
   }
 }

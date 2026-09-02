@@ -1,8 +1,8 @@
 <div class="w-full max-w-md mx-auto mb-5 sm:pt-10">
   <a routerLink="/"
     class="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" class="size-5">
-      <path d="M12.7083 5L7.5 10.2083L12.7083 15.4167" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" fill="none" class="size-5 stroke-current rtl:rotate-180">
+      <path d="M12.7083 5L7.5 10.2083L12.7083 15.4167" stroke="" stroke-width="1.5" stroke-linecap="round"
         stroke-linejoin="round"></path>
     </svg>
     Back to dashboard
@@ -93,8 +93,8 @@
           <app-label>Password <span class="text-error-500">*</span></app-label>
           <div class="relative">
             <app-input-field [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password"
-              [value]="password" name="password" class="form-input" required />
-            <span (click)="togglePasswordVisibility()" class="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2">
+              [value]="password" name="password" class="form-input" className="ltr:pr-11 rtl:pl-11" required />
+            <span (click)="togglePasswordVisibility()" class="absolute z-30 -translate-y-1/2 cursor-pointer ltr:right-4 rtl:left-4 top-1/2">
               @if (showPassword) {
               <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                 class="fill-gray-500 dark:fill-gray-400 size-5">
@@ -139,9 +139,9 @@
 
     <div class="mt-5">
       <p class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-        Don't have an account?
-        <a routerLink="/signup" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">
-          Sign Up
+        Already have an account?
+        <a routerLink="/signin" class="text-brand-500 hover:text-brand-600 dark:text-brand-400">
+          Sign In
         </a>
       </p>
     </div>
