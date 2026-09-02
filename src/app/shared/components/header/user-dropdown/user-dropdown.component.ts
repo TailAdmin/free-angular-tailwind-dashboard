@@ -94,7 +94,7 @@ export class UserDropdownComponent implements OnInit {
       document.documentElement.setAttribute('dir', 'ltr');
       localStorage.setItem('dir', 'ltr');
     }
-    this.subDropdownOpen = false;
+    this.closeDropdown();
   }
 
   @HostListener('document:click', ['$event'])
