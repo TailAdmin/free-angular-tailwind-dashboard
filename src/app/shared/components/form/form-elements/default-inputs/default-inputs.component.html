@@ -25,11 +25,12 @@
           id="password"
           [type]="showPassword ? 'text' : 'password'"
           placeholder="Enter your password"
+          className="ltr:pr-11 rtl:pl-11"
         />
         <button
           type="button"
           (click)="showPassword = !showPassword"
-          class="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
+          class="absolute z-30 -translate-y-1/2 cursor-pointer ltr:right-4 rtl:left-4 top-1/2"
         >
           @if (showPassword) {
           <svg
@@ -88,10 +89,10 @@
           id="card-number"
           type="text"
           placeholder="Card number"
-          className="pl-[62px]"
+          className="ltr:pl-[62px] rtl:pr-[62px]"
         />
         <span
-          class="absolute left-0 top-1/2 flex h-11 w-[46px] -translate-y-1/2 items-center justify-center border-r border-gray-200 dark:border-gray-800"
+          class="absolute top-1/2 ltr:left-0 rtl:right-0 flex h-11 w-[46px] -translate-y-1/2 items-center justify-center ltr:border-r rtl:border-l border-gray-200 dark:border-gray-800"
         >
           <svg
             width="20"

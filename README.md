@@ -105,6 +105,13 @@ TailAdmin Angular ships with a rich set of **ready-to-use dashboard features**:
 
 ## Changelog
 
+### v1.1.2 (2026-09-02)
+- **Framework upgrade**: Angular 21 to 22, including CLI and build tooling
+- **Internationalization**: i18n support added for multi-language content
+- **Dependency updates**: FullCalendar and ApexCharts bumped to their latest majors
+- **Keyboard and dropdown improvements**: Better keyboard navigation and cleaner dropdown behavior
+- **RTL support**: Right-to-left layout support added across components
+
 ### v1.1.1 (2026-05-23)
 - **New Feature**: Added **AI Settings** page to configure models, keys, and token limits.
 - **New Feature**: Added **Maps** page with MapLibre GL, Leaflet, and iframe styles.

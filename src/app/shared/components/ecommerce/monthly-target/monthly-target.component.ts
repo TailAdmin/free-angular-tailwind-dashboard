@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import {
   ApexNonAxisChartSeries,
@@ -18,7 +17,7 @@ import { DropdownItemComponent } from '../../ui/dropdown/dropdown-item/dropdown-
     NgApexchartsModule,
     DropdownComponent,
     DropdownItemComponent
-],
+  ],
   templateUrl: './monthly-target.component.html',
 })
 export class MonthlyTargetComponent {
@@ -31,8 +30,8 @@ export class MonthlyTargetComponent {
   };
   public plotOptions: ApexPlotOptions = {
     radialBar: {
-      startAngle: -85,
-      endAngle: 85,
+      startAngle: -90,
+      endAngle: 90,
       hollow: { size: '80%' },
       track: {
         background: '#E4E7EC',
@@ -44,7 +43,7 @@ export class MonthlyTargetComponent {
         value: {
           fontSize: '36px',
           fontWeight: '600',
-          offsetY: -40,
+          offsetY: 60,
           color: '#1D2939',
           formatter: (val: number) => `${val}%`,
         },

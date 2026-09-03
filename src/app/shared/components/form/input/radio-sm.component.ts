@@ -23,7 +23,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         <!-- Styled Radio Circle -->
         <span
           [ngClass]="
-            'mr-2 flex h-4 w-4 items-center justify-center rounded-full border ' +
+            'me-2.5 flex h-4 w-4 items-center justify-center rounded-full border ' +
             (checked
               ? 'border-brand-500 bg-brand-500'
               : 'bg-transparent border-gray-300 dark:border-gray-700')
