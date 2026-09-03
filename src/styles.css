@@ -561,6 +561,11 @@ span.flatpickr-weekday,
   fill: none !important;
 }
 
+.flatpickr-prev-month svg,
+.flatpickr-next-month svg {
+  @apply rtl:rotate-180;
+}
+
 .flatpickr-calendar.static {
   @apply left-0 right-auto rtl:left-auto rtl:right-0;
 }
