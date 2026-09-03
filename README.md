@@ -11,7 +11,7 @@ TailAdmin leverages the **powerful ecosystem of Angular 20+**, along with **Type
 
 TailAdmin Angular comes with essential UI components and layouts for building **feature-rich, data-driven dashboards** and **admin panels**. TailAdmin Angular is built on:
 
-* **Angular 20+**
+* **Angular 22+**
 * **TypeScript**
 * **Tailwind CSS v4**
 
