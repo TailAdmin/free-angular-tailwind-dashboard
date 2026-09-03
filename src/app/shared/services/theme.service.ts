@@ -24,9 +24,11 @@ export class ThemeService {
     localStorage.setItem('theme', theme);
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-color-scheme', 'dark');
       document.body.classList.add('dark:bg-gray-900');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-color-scheme', 'light');
       document.body.classList.remove('dark:bg-gray-900');
     }
   }
