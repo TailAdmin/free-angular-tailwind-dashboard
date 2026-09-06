@@ -134,9 +134,12 @@ export class CalenderComponent implements OnInit {
       // View configurations
       views: {
         multiMonthYear: {
+          aspectRatio: 1.2,
+          contentHeight: 'auto',
+          height: 'auto',
           multiMonthMaxColumns: 3,
-          tableClass: 'rounded-lg!',
-          singleMonthMinWidth: 200,
+          tableClass: 'overflow-visible! rounded-lg!',
+          singleMonthMinWidth: 320,
           showNonCurrentDates: true,
           singleMonthHeaderInnerClass:
             'text-sm font-medium! text-gray-800 dark:text-white/90',
@@ -150,7 +153,7 @@ export class CalenderComponent implements OnInit {
               : 'py-1 text-xs font-medium text-gray-400 uppercase',
           dayCellClass: (data: any) => {
             if (data.inPopover) return 'bg-transparent! p-3!';
-            let cls = 'relative! p-2!';
+            let cls = 'relative! p-0.5 sm:p-1!';
             if (data.isToday)
               cls += ' isolate bg-gray-100! font-semibold text-brand-500';
             if (data.isOther) cls += ' bg-transparent!';
