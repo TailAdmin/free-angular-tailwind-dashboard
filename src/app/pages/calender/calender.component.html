@@ -1,16 +1,16 @@
-<div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-  <div class="custom-calendar relative">
+<div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/3">
+  <div class="custom-calendar relative" [ngClass]="{ 'fc-multimonth': currentView === 'multiMonthYear' }">
     <full-calendar #calendar [options]="calendarOptions"></full-calendar>
   </div>
 
   <app-modal
     [isOpen]="isOpen"
     (close)="closeModal()"
-    className="max-w-[700px] p-6 lg:p-10"
+    className="max-w-175 p-4 sm:p-6 lg:p-10"
   >
-    <div class="flex flex-col px-2 overflow-y-auto custom-scrollbar">
+    <form (ngSubmit)="handleAddOrUpdateEvent()" class="flex custom-scrollbar flex-col overflow-y-auto px-1 sm:px-2">
       <div>
-        <h5 class="mb-2 font-semibold text-gray-800 modal-title text-theme-xl dark:text-white/90 lg:text-2xl">
+        <h5 class="modal-title mb-2 text-theme-xl font-semibold text-gray-800 lg:text-2xl dark:text-white/90">
           {{ selectedEvent ? 'Edit Event' : 'Add Event' }}
         </h5>
         <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -18,116 +18,123 @@
         </p>
       </div>
 
-      <!-- Event Title -->
-      <div class="mt-8">
+      <div class="mt-8 space-y-6">
+        <!-- Event Title -->
         <div>
-          <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+          <label for="event-title" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
             Event Title
           </label>
           <input
             id="event-title"
             type="text"
             [(ngModel)]="eventTitle"
+            name="eventTitle"
             placeholder="Enter event title"
-            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+            class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
           />
         </div>
-      </div>
 
-      <!-- Event Color -->
-      <div class="mt-6">
-        <label class="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
-          Event Color
-        </label>
-        <div class="flex flex-wrap items-center gap-4 sm:gap-5">
-          @for (entry of calendarsEvents; track entry.key) {
-            <div class="n-chk">
-              <div class="form-check form-check-inline" [class]="'form-check-' + entry.value">
-                <label
-                  class="flex items-center text-sm text-gray-700 form-check-label dark:text-gray-400 cursor-pointer"
-                  [for]="'modal' + entry.key"
-                >
-                  <span class="relative">
-                    <input
-                      class="sr-only form-check-input"
-                      type="radio"
-                      name="event-level"
-                      [value]="entry.key"
-                      [id]="'modal' + entry.key"
-                      [(ngModel)]="eventLevel"
-                    />
-                    <span
-                      class="flex items-center justify-center w-5 h-5 ltr:mr-2 rtl:ml-2 border border-gray-300 rounded-full box dark:border-gray-700"
-                    >
+        <!-- Event Color -->
+        <div>
+          <label class="mb-4 block text-sm font-medium text-gray-700 dark:text-gray-400">
+            Event Color
+          </label>
+          <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+            @for (entry of calendarsEvents; track entry.key) {
+              <div class="n-chk">
+                <div class="form-check form-check-inline" [class]="'form-check-' + entry.value">
+                  <label
+                    class="form-check-label flex items-center text-sm text-gray-700 dark:text-gray-400 cursor-pointer"
+                    [for]="'modal' + entry.key"
+                  >
+                    <span class="relative">
+                      <input
+                        class="form-check-input sr-only"
+                        type="radio"
+                        name="event-level"
+                        [value]="entry.key"
+                        [id]="'modal' + entry.key"
+                        [(ngModel)]="eventLevel"
+                      />
+                      <span
+                        class="box me-2 flex h-5 w-5 items-center justify-center rounded-full border border-gray-300 dark:border-gray-700"
+                      >
+                        <span
+                          class="h-2 w-2 rounded-full bg-white"
+                          [ngClass]="eventLevel === entry.key ? 'block' : 'hidden'"
+                        ></span>
+                      </span>
                     </span>
-                  </span>
-                  {{ entry.key }}
-                </label>
+                    {{ entry.key }}
+                  </label>
+                </div>
               </div>
-            </div>
-          }
+            }
+          </div>
         </div>
-      </div>
 
-      <!-- Start Date -->
-      <div class="mt-6">
-        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-          Enter Start Date
-        </label>
-        <div class="relative">
-          <input
-            id="event-start-date"
-            type="date"
-            [(ngModel)]="eventStartDate"
-            (click)="$any($event.target).showPicker?.()"
-            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
-          />
-          <span class="absolute top-1/2 right-3.5 -translate-y-1/2 pointer-events-none text-gray-700 dark:text-gray-400">
-            <svg class="fill-current" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M4.33317 0.0830078C4.74738 0.0830078 5.08317 0.418794 5.08317 0.833008V1.24967H8.9165V0.833008C8.9165 0.418794 9.25229 0.0830078 9.6665 0.0830078C10.0807 0.0830078 10.4165 0.418794 10.4165 0.833008V1.24967L11.3332 1.24967C12.2997 1.24967 13.0832 2.03318 13.0832 2.99967V4.99967V11.6663C13.0832 12.6328 12.2997 13.4163 11.3332 13.4163H2.6665C1.70001 13.4163 0.916504 12.6328 0.916504 11.6663V4.99967V2.99967C0.916504 2.03318 1.70001 1.24967 2.6665 1.24967L3.58317 1.24967V0.833008C3.58317 0.418794 3.91896 0.0830078 4.33317 0.0830078ZM4.33317 2.74967H2.6665C2.52843 2.74967 2.4165 2.8616 2.4165 2.99967V4.24967H11.5832V2.99967C11.5832 2.8616 11.4712 2.74967 11.3332 2.74967H9.6665H4.33317ZM11.5832 5.74967H2.4165V11.6663C2.4165 11.8044 2.52843 11.9163 2.6665 11.9163H11.3332C11.4712 11.9163 11.5832 11.8044 11.5832 11.6663V5.74967Z" fill="currentColor" />
-            </svg>
-          </span>
+        <!-- Start Date -->
+        <div>
+          <label for="event-start-date" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+            Enter Start Date
+          </label>
+          <div class="relative">
+            <input
+              id="event-start-date"
+              type="date"
+              [(ngModel)]="eventStartDate"
+              name="eventStartDate"
+              (click)="$any($event.target).showPicker?.()"
+              class="h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none py-2.5 ps-4 pe-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 cursor-pointer"
+            />
+            <span class="absolute top-1/2 end-3.5 -translate-y-1/2 pointer-events-none text-gray-700 dark:text-gray-400">
+              <svg class="fill-current" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.33317 0.0830078C4.74738 0.0830078 5.08317 0.418794 5.08317 0.833008V1.24967H8.9165V0.833008C8.9165 0.418794 9.25229 0.0830078 9.6665 0.0830078C10.0807 0.0830078 10.4165 0.418794 10.4165 0.833008V1.24967L11.3332 1.24967C12.2997 1.24967 13.0832 2.03318 13.0832 2.99967V4.99967V11.6663C13.0832 12.6328 12.2997 13.4163 11.3332 13.4163H2.6665C1.70001 13.4163 0.916504 12.6328 0.916504 11.6663V4.99967V2.99967C0.916504 2.03318 1.70001 1.24967 2.6665 1.24967L3.58317 1.24967V0.833008C3.58317 0.418794 3.91896 0.0830078 4.33317 0.0830078ZM4.33317 2.74967H2.6665C2.52843 2.74967 2.4165 2.8616 2.4165 2.99967V4.24967H11.5832V2.99967C11.5832 2.8616 11.4712 2.74967 11.3332 2.74967H9.6665H4.33317ZM11.5832 5.74967H2.4165V11.6663C2.4165 11.8044 2.52843 11.9163 2.6665 11.9163H11.3332C11.4712 11.9163 11.5832 11.8044 11.5832 11.6663V5.74967Z" fill="" />
+              </svg>
+            </span>
+          </div>
         </div>
-      </div>
 
-      <!-- End Date -->
-      <div class="mt-6">
-        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-          Enter End Date
-        </label>
-        <div class="relative">
-          <input
-            id="event-end-date"
-            type="date"
-            [(ngModel)]="eventEndDate"
-            (click)="$any($event.target).showPicker?.()"
-            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
-          />
-          <span class="absolute top-1/2 right-3.5 -translate-y-1/2 pointer-events-none text-gray-700 dark:text-gray-400">
-            <svg class="fill-current" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M4.33317 0.0830078C4.74738 0.0830078 5.08317 0.418794 5.08317 0.833008V1.24967H8.9165V0.833008C8.9165 0.418794 9.25229 0.0830078 9.6665 0.0830078C10.0807 0.0830078 10.4165 0.418794 10.4165 0.833008V1.24967L11.3332 1.24967C12.2997 1.24967 13.0832 2.03318 13.0832 2.99967V4.99967V11.6663C13.0832 12.6328 12.2997 13.4163 11.3332 13.4163H2.6665C1.70001 13.4163 0.916504 12.6328 0.916504 11.6663V4.99967V2.99967C0.916504 2.03318 1.70001 1.24967 2.6665 1.24967L3.58317 1.24967V0.833008C3.58317 0.418794 3.91896 0.0830078 4.33317 0.0830078ZM4.33317 2.74967H2.6665C2.52843 2.74967 2.4165 2.8616 2.4165 2.99967V4.24967H11.5832V2.99967C11.5832 2.8616 11.4712 2.74967 11.3332 2.74967H9.6665H4.33317ZM11.5832 5.74967H2.4165V11.6663C2.4165 11.8044 2.52843 11.9163 2.6665 11.9163H11.3332C11.4712 11.9163 11.5832 11.8044 11.5832 11.6663V5.74967Z" fill="currentColor" />
-            </svg>
-          </span>
+        <!-- End Date -->
+        <div>
+          <label for="event-end-date" class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+            Enter End Date
+          </label>
+          <div class="relative">
+            <input
+              id="event-end-date"
+              type="date"
+              [(ngModel)]="eventEndDate"
+              name="eventEndDate"
+              (click)="$any($event.target).showPicker?.()"
+              class="h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none py-2.5 ps-4 pe-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 cursor-pointer"
+            />
+            <span class="absolute top-1/2 end-3.5 -translate-y-1/2 pointer-events-none text-gray-700 dark:text-gray-400">
+              <svg class="fill-current" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.33317 0.0830078C4.74738 0.0830078 5.08317 0.418794 5.08317 0.833008V1.24967H8.9165V0.833008C8.9165 0.418794 9.25229 0.0830078 9.6665 0.0830078C10.0807 0.0830078 10.4165 0.418794 10.4165 0.833008V1.24967L11.3332 1.24967C12.2997 1.24967 13.0832 2.03318 13.0832 2.99967V4.99967V11.6663C13.0832 12.6328 12.2997 13.4163 11.3332 13.4163H2.6665C1.70001 13.4163 0.916504 12.6328 0.916504 11.6663V4.99967V2.99967C0.916504 2.03318 1.70001 1.24967 2.6665 1.24967L3.58317 1.24967V0.833008C3.58317 0.418794 3.91896 0.0830078 4.33317 0.0830078ZM4.33317 2.74967H2.6665C2.52843 2.74967 2.4165 2.8616 2.4165 2.99967V4.24967H11.5832V2.99967C11.5832 2.8616 11.4712 2.74967 11.3332 2.74967H9.6665H4.33317ZM11.5832 5.74967H2.4165V11.6663C2.4165 11.8044 2.52843 11.9163 2.6665 11.9163H11.3332C11.4712 11.9163 11.5832 11.8044 11.5832 11.6663V5.74967Z" fill="" />
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
 
       <!-- Modal Footer -->
-      <div class="flex items-center gap-3 mt-6 modal-footer sm:justify-end">
+      <div class="modal-footer mt-6 flex items-center gap-3 sm:justify-end">
         <button
           (click)="closeModal()"
           type="button"
-          class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] sm:w-auto"
+          class="modal-close-btn flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 sm:w-auto dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/3"
         >
           Close
         </button>
         <button
-          (click)="handleAddOrUpdateEvent()"
-          type="button"
-          class="btn btn-success btn-update-event flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 sm:w-auto"
+          type="submit"
+          class="flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 sm:w-auto"
+          [ngClass]="selectedEvent ? 'btn-update-event' : 'btn-add-event'"
         >
           {{ selectedEvent ? 'Update Changes' : 'Add Event' }}
         </button>
       </div>
-    </div>
+    </form>
   </app-modal>
 </div>
