@@ -9,6 +9,9 @@
     "test": "ng test"
   },
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "@amcharts/amcharts5": "^5.13.5",
     "@amcharts/amcharts5-geodata": "^5.1.4",
