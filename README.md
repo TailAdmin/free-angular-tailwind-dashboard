@@ -106,11 +106,11 @@ TailAdmin Angular ships with a rich set of **ready-to-use dashboard features**:
 
 ### Version 1.3.0 - [October 18, 2026]
 
-- **Design Refresh**: Updated the free pages to match the latest TailAdmin Angular Pro design, with the UI components built on `@spartan-ng/brain` headless primitives.
-- **Updated Pages**: Sidebar, header, user dropdown, notification dropdown, eCommerce dashboard, calendar, profile, form elements, basic tables, invoice, blank page, 404 page, line chart, bar chart, UI elements (alerts, avatars, badges, buttons, images, videos), and sign in / sign up.
-- **New Structure**: Components used by a single feature now live next to their page in `pages/<feature>/components/` (for example `pages/dashboard/components`), `shared/components` keeps only reusable code, and page folders are named after their routes (`avatars`, `badge`). The calendar folder is renamed from `calender` to `calendar`, and the invoice page now lives in `pages/ecommerce/invoice`.
+- **Design Refresh**: Refactored UI components built on `@spartan-ng/brain` headless primitives.
+- **Updated Pages**: Refreshed and updated all pages for improved consistency, usability, and design..
+- **Improve Project Structure**: Reorganized components by feature for better maintainability and scalability.
 - **Vector Map**: The eCommerce customer demographic map now uses `jsvectormap` instead of AmCharts.
-- **RTL Improvements**: Dropdowns, popovers and overlays now follow the live page direction when you switch between LTR and RTL.
+- **RTL Improvements**: Enhanced right-to-left (RTL) layout support and fixed related styling and alignment issues.
 - **Dependencies**: Added `@spartan-ng/brain` (pinned to 1.6.3), `@floating-ui/dom`, `jsvectormap` and `tw-animate-css`. Removed `@amcharts/amcharts5`, `@amcharts/amcharts5-geodata`, `@popperjs/core`, `ng-otp-input` and `prismjs`.
 
 ### Version 1.2.0 - [September 02, 2026]
