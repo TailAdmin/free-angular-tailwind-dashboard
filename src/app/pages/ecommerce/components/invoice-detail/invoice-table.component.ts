@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TABLE_IMPORTS } from '../ui/table';
+import { TABLE_IMPORTS } from '../../../../shared/components/ui/table';
 import { defaultInvoiceData } from './data';
 import { InvoiceItem } from './types';
 

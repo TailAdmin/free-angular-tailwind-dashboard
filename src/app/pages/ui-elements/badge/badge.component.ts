@@ -26,6 +26,6 @@ import { GhostVariantWithTrailingIconComponent } from '../../../shared/component
     LightVariantWithTrailingIconComponent,
     GhostVariantWithTrailingIconComponent,
   ],
-  templateUrl: './badges.component.html',
+  templateUrl: './badge.component.html',
 })
 export class BadgesComponent {}

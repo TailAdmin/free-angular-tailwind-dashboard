@@ -4,8 +4,8 @@ import { CardHeaderComponent } from './card-header.component';
 import { recentOrdersData } from './data';
 import { OrderRowComponent } from './order-row.component';
 import { CrmOrder, DealStatus } from './types';
-import { TABLE_IMPORTS } from '../../../ui/table';
-import { ButtonComponent } from '../../../ui/button/button.component';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 
 @Component({
   selector: 'app-table-two',

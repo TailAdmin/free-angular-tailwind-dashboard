@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Campaign } from './types';
-import { TABLE_IMPORTS } from '../../../ui/table';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
 
 @Component({
   selector: '[app-table-four-campaign-row]',

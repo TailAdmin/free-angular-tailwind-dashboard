@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PageBreadcrumbComponent } from '../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
-import { BlankCardComponent } from '../../shared/components/blank';
+import { BlankCardComponent } from './components';
 
 @Component({
   selector: 'app-blank',

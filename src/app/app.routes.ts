@@ -6,12 +6,12 @@ import { BasicTablesComponent } from './pages/tables/basic-tables/basic-tables.c
 import { BlankComponent } from './pages/blank/blank.component';
 import { NotFoundComponent } from './pages/other-page/not-found/not-found.component';
 import { AppLayoutComponent } from './shared/layout/app-layout/app-layout.component';
-import { InvoicesComponent } from './pages/invoices/invoices.component';
+import { InvoiceComponent } from './pages/ecommerce/invoice/invoice.component';
 import { LineChartComponent } from './pages/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './pages/charts/bar-chart/bar-chart.component';
 import { AlertsComponent } from './pages/ui-elements/alerts/alerts.component';
-import { AvatarElementComponent } from './pages/ui-elements/avatar-element/avatar-element.component';
-import { BadgesComponent } from './pages/ui-elements/badges/badges.component';
+import { AvatarElementComponent } from './pages/ui-elements/avatars/avatars.component';
+import { BadgesComponent } from './pages/ui-elements/badge/badge.component';
 import { ButtonsComponent } from './pages/ui-elements/buttons/buttons.component';
 import { ImagesComponent } from './pages/ui-elements/images/images.component';
 import { VideosComponent } from './pages/ui-elements/videos/videos.component';
@@ -59,7 +59,7 @@ export const routes: Routes = [
       // support tickets
       {
         path:'invoice',
-        component:InvoicesComponent,
+        component:InvoiceComponent,
         title:'Angular Invoice Details Dashboard | TailAdmin - Angular Admin Dashboard Template'
       },
       {

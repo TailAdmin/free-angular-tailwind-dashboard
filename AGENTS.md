@@ -7,35 +7,32 @@
 ```
 src/
 ├── app/
-│   ├── pages/                    # Route page components categorized by feature/domain
+│   ├── pages/                    # One folder per feature. Components used only by that feature live in <feature>/components/
 │   │   ├── auth-pages/           # Sign in, Sign up
-│   │   ├── blank/                # Blank starter page
-│   │   ├── calender/             # FullCalendar interactive schedule view
-│   │   ├── charts/               # Chart preview pages (line, bar)
-│   │   ├── dashboard/            # Dashboard variant (ecommerce)
-│   │   ├── forms/                # Form elements and layouts
-│   │   ├── invoices/             # Invoice management preview
-│   │   ├── other-page/           # Error pages (404)
-│   │   ├── profile/              # User profile and settings
-│   │   ├── tables/               # Basic tables preview
-│   │   └── ui-elements/          # UI primitives showcase (alerts, badges, buttons, modals, etc.)
+│   │   ├── blank/                # Blank starter page (+ components/)
+│   │   ├── calendar/             # FullCalendar interactive schedule view
+│   │   ├── charts/               # Line and bar chart pages (+ components/)
+│   │   ├── dashboard/            # Ecommerce dashboard (+ components/ with its widgets)
+│   │   ├── ecommerce/            # Invoice detail page (+ components/invoice-detail/)
+│   │   ├── forms/                # Form elements
+│   │   ├── other-page/           # 404 page
+│   │   ├── profile/              # User profile (address, personal info, security, danger zone)
+│   │   ├── tables/               # Basic tables (+ components/)
+│   │   └── ui-elements/          # alerts, avatars, badge, buttons, images, videos (demo components in <page>/components/)
 │   ├── shared/
-│   │   ├── components/           # Reusable standalone UI and domain components
-│   │   │   ├── auth/             # Authentication forms (signin, signup)
-│   │   │   ├── cards/            # Metric and summary cards
-│   │   │   ├── charts/           # ApexChart subcomponents (bar, line)
-│   │   │   ├── common/           # Shared wrappers (component-card, page-breadcrumb, table-dropdown)
-│   │   │   ├── ecommerce/        # Dashboard widgets (metrics, monthly target, sales chart, recent orders)
-│   │   │   ├── form/             # Form controls (input, select, date-picker, time-picker)
+│   │   ├── components/           # Components reused across features
+│   │   │   ├── common/           # Shared wrappers (component-card, page-breadcrumb, theme-toggle, grid-shape)
+│   │   │   ├── form/             # Form controls (input, select, multi-select, date-picker, time-picker, ...)
+│   │   │   ├── full-width-pages/ # Sign in, sign up and 404 page content
 │   │   │   ├── header/           # Header widgets (user-dropdown, notification-dropdown)
-│   │   │   ├── invoice/          # Invoice widgets (invoice-list)
-│   │   │   ├── tables/           # Table variations (basic-table-one, basic-table-two, etc.)
-│   │   │   ├── ui/               # Core UI primitives (alert, avatar, badge, button, modal, dropdown, tabs)
-│   │   │   └── user-profile/     # Profile widgets (user-meta-card, user-address-card)
-│   │   ├── layout/               # Master layouts & navigation shells (app-layout, app-header, app-sidebar, backdrop)
-│   │   └── services/             # Core singleton services (theme.service, sidebar.service, modal.service)
+│   │   │   ├── maps/             # jsvectormap helper and map data
+│   │   │   └── ui/               # Core UI primitives built on @spartan-ng/brain (alert, avatar, badge, button, dropdown, ...)
+│   │   ├── directive/            # Custom directives (click-outside)
+│   │   ├── layout/               # Master layouts & navigation shells (app-layout, app-header, app-sidebar, auth-page-layout, backdrop)
+│   │   ├── pipe/                 # Custom pipes (safe-html)
+│   │   └── services/             # Core singleton services (theme, sidebar, dropdown, live-directionality)
 │   ├── app.component.ts          # Root component (handles RTL persistence and initialization)
-│   ├── app.config.ts             # Application configuration & providers (router, change detection)
+│   ├── app.config.ts             # Application configuration & providers (router, change detection, live directionality)
 │   └── app.routes.ts             # Application routing definitions
 ├── styles.css                    # Tailwind CSS v4 theme (@theme), global utility classes & 3rd party overrides
 ├── main.ts                       # Angular bootstrap entry point
@@ -52,7 +49,8 @@ src/
 - **State Management & Services**:
   - `ThemeService`: Reactive RxJS `BehaviorSubject` for `light`/`dark` theme management synced with `localStorage`, `document.documentElement` (`.dark` class, `data-theme`, `color-scheme`).
   - `SidebarService`: Manages sidebar expand/collapse, mobile drawer visibility, and hover state (`isExpanded$`, `isMobileOpen$`, `isHovered$`).
-  - `ModalService`: Synchronous & observable state handler for reusable modal dialogs.
+  - `DropdownService`: Coordinates mutually exclusive open states for the header dropdowns.
+  - `LiveDirectionality`: Replaces the CDK `Directionality` so overlays follow the live `dir` attribute on `<html>`.
 - **RTL & Localization Rules**:
   - The Free version uses **English text strings directly** across all components — do **NOT** install or use multi-language packages (`TranslatePipe`, `translate`, `i18n.json`).
   - RTL mode is driven by setting `dir="rtl"` on `<html>` and saving to `localStorage.setItem('dir', 'rtl')`, toggled via the language menu in `UserDropdownComponent` and restored on startup in `AppComponent`.
@@ -62,7 +60,8 @@ src/
   - **FullCalendar** (`@fullcalendar/angular`): Event calendar with DayGrid, TimeGrid, and Interaction plugins.
   - **Flatpickr**: Advanced date and time pickers.
   - **Swiper**: Touch sliders and carousels.
-  - **Prism.js**: Code snippet syntax highlighting.
+  - **@spartan-ng/brain**: Headless primitives behind the UI components (dropdowns, popovers, dialogs, tooltips); it reads text direction from `LiveDirectionality`.
+  - **jsvectormap**: Vector map in the ecommerce customer demographic card.
 - **Scripts**:
   - `npm start` / `ng serve` — starts the development server on `http://localhost:4200/`.
   - `npm run build` / `ng build` — compiles the production bundle into `dist/`.
@@ -80,7 +79,7 @@ src/
   - UI primitives: `src/app/shared/components/ui/<component-name>/`.
   - Form controls: `src/app/shared/components/form/<component-name>/`.
   - Shared wrappers: `src/app/shared/components/common/<component-name>/`.
-  - Domain-specific components: `src/app/shared/components/<feature>/<component-name>/`.
+  - Feature-only components: `src/app/pages/<feature>/components/<component-name>/`. Move a component to `src/app/shared/components/` only when a second feature needs it.
   - Always declare `@Component({ standalone: true, imports: [...] })` and explicitly import all required modules/components (e.g. `CommonModule`, `RouterModule`, `FormsModule`).
 - **Inputs & Outputs**:
   - Use `@Input()` with explicit TypeScript types and sensible default values.

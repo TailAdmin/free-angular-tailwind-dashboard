@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CrmOrder } from './types';
-import { TABLE_IMPORTS } from '../../../ui/table';
-import { ButtonComponent } from '../../../ui/button/button.component';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 
 @Component({
   selector: '[app-table-two-order-row]',

@@ -2,11 +2,17 @@
 layer(base);
 
 @import "tailwindcss";
+@import "tw-animate-css";
 @import "swiper/css/bundle";
 @import "flatpickr/dist/flatpickr.css";
 @import "fullcalendar/skeleton.css";
 @import "fullcalendar/themes/classic/theme.css";
 @import "fullcalendar/themes/classic/palette.css";
+@import "jsvectormap/dist/jsvectormap.css";
+@import "fullcalendar/skeleton.css";
+@import "fullcalendar/themes/classic/theme.css";
+@import "fullcalendar/themes/classic/palette.css";
+@import "@angular/cdk/overlay-prebuilt.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -24,22 +30,23 @@ layer(base);
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
 
-  --text-title-2xl: 72px;
-  --text-title-2xl--line-height: 90px;
-  --text-title-xl: 60px;
-  --text-title-xl--line-height: 72px;
-  --text-title-lg: 48px;
-  --text-title-lg--line-height: 60px;
-  --text-title-md: 36px;
-  --text-title-md--line-height: 44px;
-  --text-title-sm: 30px;
-  --text-title-sm--line-height: 38px;
-  --text-theme-xl: 20px;
-  --text-theme-xl--line-height: 30px;
-  --text-theme-sm: 14px;
-  --text-theme-sm--line-height: 20px;
-  --text-theme-xs: 12px;
-  --text-theme-xs--line-height: 18px;
+  --text-heading-one: 64px;
+  --text-heading-one--line-height: 80px;
+  --text-heading-two: 56px;
+  --text-heading-two--line-height: 72px;
+  --text-heading-three: 48px;
+  --text-heading-three--line-height: 60px;
+  --text-heading-four: 40px;
+  --text-heading-four--line-height: 48px;
+  --text-heading-five: 32px;
+  --text-heading-five--line-height: 40px;
+  --text-heading-six: 24px;
+  --text-heading-six--line-height: 32px;
+
+  --text-title-lg: 20px;
+  --text-title-lg--line-height: 30px;
+  --text-title-sm: 18px;
+  --text-title-sm--line-height: 28px;
 
   --color-current: currentColor;
   --color-transparent: transparent;
@@ -191,12 +198,12 @@ layer(base);
     cursor: pointer;
   }
   body {
-    @apply relative font-normal font-outfit z-1 bg-gray-50;
+    @apply relative font-normal font-outfit z-1 bg-gray-50 dark:bg-gray-900;
   }
 }
 
 @utility menu-item {
-  @apply relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-theme-sm;
+  @apply relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-sm;
 }
 
 @utility menu-item-active {
@@ -238,7 +245,7 @@ layer(base);
 }
 
 @utility menu-dropdown-item {
-  @apply relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-theme-sm font-medium;
+  @apply relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium;
 }
 @utility menu-dropdown-item-active {
   @apply bg-brand-50 text-brand-500 dark:bg-brand-500/[0.12] dark:text-brand-400;
@@ -298,15 +305,14 @@ layer(base);
   background-color: #344054;
 }
 
-@layer utilities {
-  /* For Remove Date Icon */
-  input[type="date"]::-webkit-inner-spin-button,
-  input[type="time"]::-webkit-inner-spin-button,
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="time"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
-  }
+/* For Remove Date Icon */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none !important;
+  opacity: 0 !important;
+  -webkit-appearance: none !important;
 }
 
 .tableCheckbox:checked ~ span span {
@@ -325,8 +331,9 @@ layer(base);
   @apply !fill-gray-700 dark:!fill-gray-400;
 }
 
-.apexcharts-tooltip.apexcharts-theme-light {
-  @apply gap-1 !rounded-lg !border-gray-200 p-3 !shadow-theme-sm dark:!border-gray-800 dark:!bg-gray-900;
+.apexcharts-tooltip.apexcharts-theme-light,
+.apexcharts-tooltip {
+  @apply gap-1 !rounded-lg !border-gray-200 !bg-white p-3 !shadow-theme-sm dark:!border-gray-800 dark:!bg-gray-900;
 }
 
 .apexcharts-tooltip-marker {
@@ -347,7 +354,7 @@ layer(base);
   @apply !mb-0 !border-b-0 !bg-transparent !p-0 !text-[10px] !leading-4 !text-gray-800 dark:!text-white/90;
 }
 .apexcharts-tooltip-text {
-  @apply !text-theme-xs !text-gray-700 dark:!text-white/90;
+  @apply !text-xs !text-gray-700 dark:!text-white/90;
 }
 .apexcharts-tooltip-text-y-value {
   @apply !font-medium;
@@ -363,8 +370,14 @@ layer(base);
   @apply !fill-gray-800 !font-semibold dark:!fill-white/90;
 }
 
+#chartEleven .apexcharts-datalabels-group .apexcharts-text,
 #chartDarkStyle .apexcharts-datalabels-group .apexcharts-text {
   @apply !fill-gray-800 !font-semibold dark:!fill-white/90;
+}
+
+#chartDarkStyle .apexcharts-datalabels-group .apexcharts-datalabel-label,
+.chartDarkStyle .apexcharts-datalabels-group .apexcharts-datalabel-label {
+  @apply !fill-gray-500 !font-normal dark:!fill-gray-400;
 }
 
 #chartSixteen .apexcharts-legend {
@@ -405,8 +418,10 @@ layer(base);
 
 .stocks-slider-outer .swiper-button-next svg,
 .stocks-slider-outer .swiper-button-prev svg {
-  @apply !h-auto !w-auto;
+  @apply !h-auto !w-auto rtl:rotate-180;
+  fill: none;
 }
+/* flatpicker css start */
 
 .flatpickr-wrapper {
   @apply w-full;
@@ -414,7 +429,9 @@ layer(base);
 .flatpickr-calendar {
   @apply mt-2 !bg-white !rounded-xl !p-5 !border !border-gray-200 dark:!border-white/5 !text-gray-500 dark:!bg-gray-dark dark:!text-gray-400 dark:!shadow-theme-xl 2xsm:!w-auto;
 }
-
+.flatpickr-time input {
+  background-color: #f9fafb !important;
+}
 .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-months .flatpickr-next-month:hover svg {
   @apply stroke-brand-500;
@@ -423,7 +440,6 @@ layer(base);
 .flatpickr-calendar.arrowTop:after {
   @apply hidden;
 }
-
 .flatpickr-current-month {
   @apply !p-0;
 }
@@ -438,21 +454,32 @@ layer(base);
 }
 
 .flatpickr-weekdays {
-  @apply h-auto mt-6 mb-4 !bg-transparent;
+  @apply mt-6 mb-4 h-auto bg-transparent!;
 }
 
 .flatpickr-weekday {
-  @apply !text-theme-sm !font-medium !text-gray-500 dark:!text-gray-400 !bg-transparent;
+  @apply !text-sm !font-medium !text-gray-500 dark:!text-gray-400;
 }
 
 .flatpickr-day {
-  @apply !flex !items-center !text-theme-sm !font-medium !text-gray-800 dark:!text-white/90 dark:hover:!border-gray-300 dark:hover:!bg-gray-900;
+  @apply !flex !items-center !text-sm !font-medium !text-gray-800 dark:!text-white/90 dark:hover:!border-gray-300 dark:hover:!bg-gray-900;
 }
 .flatpickr-day.nextMonthDay,
 .flatpickr-day.prevMonthDay {
   @apply !text-gray-400;
 }
-
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  @apply !top-7 dark:!fill-white dark:!text-white;
+}
+.flatpickr-months .flatpickr-prev-month.flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month.flatpickr-prev-month {
+  @apply !left-7 rtl:!left-auto rtl:!right-7;
+}
+.flatpickr-months .flatpickr-prev-month.flatpickr-next-month,
+.flatpickr-months .flatpickr-next-month.flatpickr-next-month {
+  @apply !right-7 rtl:!right-auto rtl:!left-7;
+}
 .flatpickr-months > .flatpickr-month {
   background: none !important;
 }
@@ -462,45 +489,27 @@ layer(base);
   background-image: none !important;
   font-weight: 500;
 }
-
-.flatpickr-month
-  .flatpickr-current-month
-  .flatpickr-monthDropdown-months:focus {
+.flatpickr-month .flatpickr-current-month .flatpickr-monthDropdown-months:focus {
   outline: none !important;
   border: 0 !important;
 }
-.flatpickr-months .flatpickr-prev-month,
-.flatpickr-months .flatpickr-next-month {
-  @apply !top-7 dark:!fill-white dark:!text-white !bg-transparent;
-}
-.flatpickr-months .flatpickr-prev-month.flatpickr-prev-month,
-.flatpickr-months .flatpickr-next-month.flatpickr-prev-month {
-  @apply !left-7;
-}
-.flatpickr-months .flatpickr-prev-month.flatpickr-next-month,
-.flatpickr-months .flatpickr-next-month.flatpickr-next-month {
-  @apply !right-7;
-}
-.flatpickr-days {
-  @apply !border-0;
-}
 span.flatpickr-weekday,
 .flatpickr-months .flatpickr-month {
-  @apply dark:!fill-white dark:!text-white !bg-none;
+  @apply bg-none! dark:!fill-white dark:!text-white;
 }
-
+.flatpickr-days {
+  @apply border-0!;
+}
 .flatpickr-rContainer {
-  @apply dark:!bg-gray-dark;
+  @apply dark:bg-gray-950;
 }
-
 .flatpickr-innerContainer {
-  @apply !border-b-0;
-}
-.flatpickr-months .flatpickr-month {
-  @apply !bg-none;
+  @apply border-b-0!;
 }
 .flatpickr-day.inRange {
-  box-shadow: -5px 0 0 #f9fafb, 5px 0 0 #f9fafb !important;
+  box-shadow:
+    -5px 0 0 #f9fafb,
+    5px 0 0 #f9fafb !important;
   @apply dark:!shadow-datepicker;
 }
 .flatpickr-day.inRange,
@@ -549,6 +558,11 @@ span.flatpickr-weekday,
 .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
   box-shadow: -10px 0 0 #465fff;
 }
+[dir="rtl"] .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+[dir="rtl"] .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
+[dir="rtl"] .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+  box-shadow: 10px 0 0 #465fff;
+}
 
 .flatpickr-months .flatpickr-prev-month svg,
 .flatpickr-months .flatpickr-next-month svg,
@@ -561,19 +575,18 @@ span.flatpickr-weekday,
   fill: none !important;
 }
 
-/* .flatpickr-prev-month svg,
+.flatpickr-prev-month svg,
 .flatpickr-next-month svg {
   @apply rtl:rotate-180;
-} */
+}
 
 .flatpickr-calendar.static {
-  @apply left-0 right-auto rtl:left-auto rtl:right-0;
+  @apply start-auto end-0;
 }
-.flatpickr-calendar.static.flatpickr-right {
-  @apply right-0 left-auto rtl:right-auto rtl:left-0;
-}
-.flatpickr-calendar.static.flatpickr-left {
-  @apply left-0 right-auto rtl:left-auto rtl:right-0;
+@media (max-width: 525px) {
+  .flatpickr-calendar.static {
+    @apply start-auto! end-0! ms-0! -me-[30px]!;
+  }
 }
 .flatpickr-calendar.hasTime {
   width: 300px !important;
@@ -601,22 +614,22 @@ span.flatpickr-weekday,
   @apply gap-2;
 }
 .fc-button-group .fc-button {
-  @apply flex h-10 w-10 items-center justify-center !rounded-lg border border-gray-200 bg-transparent hover:border-gray-200 hover:bg-gray-50 focus:shadow-none active:!border-gray-200 active:!bg-transparent active:!shadow-none dark:border-gray-800 dark:hover:border-gray-800 dark:hover:bg-gray-900 dark:active:!border-gray-800 capitalize;
+  @apply flex h-10 w-10 items-center justify-center !rounded-lg border border-gray-200 bg-transparent hover:border-gray-200 hover:bg-gray-50 focus:shadow-none active:!border-gray-200 active:!bg-transparent active:!shadow-none dark:border-gray-800 dark:hover:border-gray-800 dark:hover:bg-gray-900 dark:active:!border-gray-800;
 }
 
 .fc-button-group .fc-button.fc-prev-button:before {
   @apply inline-block mt-1;
-  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.0068 6L9.75684 12.25L16.0068 18.5' stroke='%23344054' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E%0A");
+  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.0068 6L9.75684 12.25L16.0068 18.5' stroke='%23344054' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 }
 .fc-button-group .fc-button.fc-next-button:before {
   @apply inline-block mt-1;
-  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.50684 19L15.7568 12.75L9.50684 6.5' stroke='%23344054' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E%0A");
+  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.50684 19L15.7568 12.75L9.50684 6.5' stroke='%23344054' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 }
 .dark .fc-button-group .fc-button.fc-prev-button:before {
-  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.0068 6L9.75684 12.25L16.0068 18.5' stroke='%2398A2B3' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E%0A");
+  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16.0068 6L9.75684 12.25L16.0068 18.5' stroke='%2398A2B3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 }
 .dark .fc-button-group .fc-button.fc-next-button:before {
-  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.50684 19L15.7568 12.75L9.50684 6.5' stroke='%2398A2B3' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round'/%3E%3C/svg%3E%0A");
+  content: url("data:image/svg+xml,%3Csvg width='25' height='24' viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.50684 19L15.7568 12.75L9.50684 6.5' stroke='%2398A2B3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 }
 .fc-button-group .fc-button .fc-icon {
   @apply hidden;
@@ -636,7 +649,7 @@ html.dark .fc-daygrid-day.fc-classic-Jk3 {
   background-color: transparent !important;
 }
 
-html.dark [role="dialog"],
+html.dark .fc [role="dialog"],
 html.dark [role="dialog"].fc-classic-Jk3,
 html.dark .fc-popover,
 html.dark .fc-popover.fc-classic-Jk3,
@@ -735,17 +748,6 @@ html.dark full-calendar,
   border-top-color: var(--color-gray-800, #1f2937) !important;
 }
 
-.fc-header-toolbar.fc-toolbar .fc-toolbar-chunk:last-child {
-  @apply rounded-lg bg-gray-100 p-0.5 dark:bg-gray-900;
-}
-.fc-header-toolbar.fc-toolbar .fc-toolbar-chunk:last-child .fc-button {
-  @apply !h-auto !w-auto rounded-md !border-0 bg-transparent !px-5 !py-2 text-sm font-medium text-gray-500 hover:text-gray-700 focus:!shadow-none dark:text-gray-400;
-}
-.fc-header-toolbar.fc-toolbar
-  .fc-toolbar-chunk:last-child
-  .fc-button.fc-button-active {
-  @apply text-gray-900 bg-white dark:bg-gray-800 dark:text-white;
-}
 .fc-theme-standard th {
   @apply !border-x-0 border-t !border-gray-200 bg-gray-50 !text-left dark:!border-gray-800 dark:bg-gray-900;
 }
@@ -769,7 +771,10 @@ html.dark full-calendar,
   @apply !p-3 text-sm font-medium text-gray-700 dark:text-gray-400;
 }
 .fc .fc-daygrid-day-top {
-  @apply !flex-row;
+  @apply flex-row-reverse;
+}
+[dir="rtl"] .fc .fc-daygrid-day-top {
+  @apply flex-row;
 }
 .fc .fc-day-other .fc-daygrid-day-top {
   opacity: 1;
@@ -777,45 +782,14 @@ html.dark full-calendar,
 .fc .fc-day-other .fc-daygrid-day-top .fc-daygrid-day-number {
   @apply text-gray-400 dark:text-white/30;
 }
-.event-fc-color {
-  @apply rounded-lg py-2.5 pl-4 pr-3;
-  direction: ltr !important;
+.custom-calendar .fc-daygrid-event {
+  @apply border-0! bg-transparent! shadow-none! hover:shadow-none! focus:outline-none!;
 }
-.event-fc-color .fc-event-title {
-  @apply p-0 text-sm font-normal text-gray-700 dark:text-white!;
+.custom-calendar .fc-daygrid-event .fc-event-main {
+  @apply p-0! border-0! bg-transparent!;
 }
-.fc-daygrid-event-dot {
-  @apply w-1 h-5 ml-0 mr-3 border-none rounded-sm;
-}
-.fc-event {
+.custom-calendar .fc-event {
   @apply focus:shadow-none;
-}
-.fc-daygrid-event.fc-event-start {
-  @apply !ml-3;
-}
-.event-fc-color.fc-bg-success {
-  @apply border-success-50 bg-success-50;
-}
-.event-fc-color.fc-bg-danger {
-  @apply border-error-50 bg-error-50;
-}
-.event-fc-color.fc-bg-primary {
-  @apply border-brand-50 bg-brand-50;
-}
-.event-fc-color.fc-bg-warning {
-  @apply border-orange-50 bg-orange-50;
-}
-.event-fc-color.fc-bg-success .fc-daygrid-event-dot {
-  @apply bg-success-500;
-}
-.event-fc-color.fc-bg-danger .fc-daygrid-event-dot {
-  @apply bg-error-500;
-}
-.event-fc-color.fc-bg-primary .fc-daygrid-event-dot {
-  @apply bg-brand-500;
-}
-.event-fc-color.fc-bg-warning .fc-daygrid-event-dot {
-  @apply bg-orange-500;
 }
 .fc-direction-ltr .fc-timegrid-slot-label-frame {
   @apply px-3 py-1.5 text-left text-sm font-medium text-gray-500 dark:text-gray-400;
@@ -823,7 +797,7 @@ html.dark full-calendar,
 .fc .fc-timegrid-axis-cushion {
   @apply text-sm font-medium text-gray-500 dark:text-gray-400;
 }
-
+/* flatpicker css end */
 .input-date-icon::-webkit-inner-spin-button,
 .input-date-icon::-webkit-calendar-picker-indicator {
   opacity: 0;
@@ -833,6 +807,7 @@ html.dark full-calendar,
 .swiper-button-prev svg,
 .swiper-button-next svg {
   @apply !h-auto !w-auto;
+  fill: none;
 }
 
 .carouselTwo .swiper-button-next:after,
@@ -856,12 +831,12 @@ html.dark full-calendar,
 
 .carouselTwo .swiper-button-prev,
 .carouselFour .swiper-button-prev {
-  @apply !left-3 sm:!left-4;
+  @apply !left-3 sm:!left-4 rtl:!left-auto rtl:!right-3 sm:rtl:!right-4;
 }
 
 .carouselTwo .swiper-button-next,
 .carouselFour .swiper-button-next {
-  @apply !right-3 sm:!right-4;
+  @apply !right-3 sm:!right-4 rtl:!right-auto rtl:!left-3 sm:rtl:!left-4;
 }
 
 .carouselThree .swiper-pagination,
@@ -1162,11 +1137,135 @@ pre[class*="language-"] {
   color: #98a2b3;
 }
 
-.line-numbers .line-numbers-rows {
-  border-right: 0 !important;
-}
-pre[class*="language-"].line-numbers {
+pre[class*="language-"].line-numbers,
+pre.line-numbers {
+  position: relative;
   padding-left: 2.8em !important;
+  counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code,
+pre.line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: -2.8em;
+  width: 2.5em;
+  letter-spacing: -1px;
+  border-right: 0 !important;
+  user-select: none;
+}
+
+.line-numbers-rows > span {
+  display: block;
+  counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+  content: counter(linenumber);
+  color: #98a2b3;
+  display: block;
+  padding-right: 0.8em;
+  text-align: right;
+}
+
+.dark .line-numbers-rows > span:before {
+  color: #667085;
+}
+/* @media screen and (max-width: 525px) {
+  .flatpickr-calendar.static {
+    margin-right: -60px !important;
+  }
+} */
+
+@utility docs-menu-item {
+  @apply block rounded-lg px-3 py-1.5 text-sm transition-colors duration-150;
+}
+
+@utility docs-menu-item-active {
+  @apply bg-brand-50 text-brand-500 dark:bg-brand-500/[0.12] dark:text-brand-400;
+}
+
+@utility docs-menu-item-inactive {
+  @apply text-gray-500 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white;
+}
+
+@utility docs-border-item {
+  @apply -ms-[1.5px] block border-s-[1.5px] ps-4 text-sm font-normal transition-colors duration-200;
+}
+
+@utility docs-border-item-active {
+  @apply border-brand-500 text-brand-500;
+}
+
+@utility docs-border-item-inactive {
+  @apply border-transparent text-gray-500 hover:border-gray-800 hover:text-gray-800 dark:text-gray-400 dark:hover:border-gray-400 dark:hover:text-gray-200;
+}
+
+@utility nav-icon-item {
+  @apply flex size-10 items-center justify-center rounded-full;
+}
+
+@utility nav-icon-item-active {
+  @apply border border-gray-200 bg-white text-brand-500 dark:border-gray-800 dark:bg-gray-900;
+}
+
+@utility nav-icon-item-inactive {
+  @apply border border-transparent text-gray-500 hover:border-gray-200 hover:bg-white hover:text-brand-500 dark:text-gray-400 dark:hover:border-gray-800 dark:hover:bg-gray-900 dark:hover:text-brand-500;
+}
+
+#card-slider-prev.swiper-button-disabled,
+#card-slider-next.swiper-button-disabled {
+  @apply pointer-events-none opacity-50;
+}
+
+/* ==========================================================================
+   RTL Overrides & Localization Utilities
+   ========================================================================== */
+
+/* Static flatpickr calendars open from the input's start edge in RTL (extends to the right) */
+[dir="rtl"] .flatpickr-calendar.static,
+[dir="rtl"] .custom-datepicker .flatpickr-calendar.static.open {
+  left: 0 !important;
+  right: auto !important;
+}
+@media (max-width: 525px) {
+  [dir="rtl"] .flatpickr-calendar.static {
+    margin-inline: 0 !important;
+    margin-left: -30px !important;
+  }
+}
+
+[dir="rtl"] .flatpickr-calendar.arrowTop:before,
+[dir="rtl"] .flatpickr-calendar.arrowTop:after {
+  left: 22px;
+  right: auto;
+}
+
+/* Flatpickr arrows stay natural */
+
+[dir="rtl"] .apexcharts-tooltip {
+  direction: rtl;
+  text-align: right;
+}
+
+/* end apexcharts rtl overrides */
+/* Vector maps (jsvectormap) keep LTR geometry in RTL */
+[dir="rtl"] .jvm-container,
+[dir="rtl"] app-country-map,
+[dir="rtl"] app-vector-map-one,
+[dir="rtl"] app-vector-map-two,
+[dir="rtl"] app-vector-map-three,
+[dir="rtl"] .mapOne,
+[dir="rtl"] .mapTwo {
+  direction: ltr !important;
+  text-align: left !important;
 }
 
 @keyframes fadeIn {
@@ -1184,45 +1283,219 @@ pre[class*="language-"].line-numbers {
   animation: fadeIn 0.15s ease-out forwards;
 }
 
-/* ==========================================================================
-   RTL Overrides & Localization Utilities
-   ========================================================================== */
-
-[dir="rtl"] .custom-datepicker .flatpickr-calendar.static.open {
-  left: 0 !important;
-  right: auto !important;
-}
-
-[dir="rtl"] .flatpickr-calendar.arrowTop:before,
-[dir="rtl"] .flatpickr-calendar.arrowTop:after {
-  left: 22px;
-  right: auto;
-}
-
-/* Flatpickr arrows stay natural */
-
-[dir="rtl"] .apexcharts-tooltip {
-  direction: rtl;
-  text-align: right;
-}
-
-/* end apexcharts rtl overrides */
-/* amCharts 5 RTL & SVG text alignment fixes */
-[dir="rtl"] div[id*="chartdiv"],
-[dir="rtl"] .am5-layer-30,
-[dir="rtl"] .am5-tooltip-container,
-[dir="rtl"] app-country-map,
-[dir="rtl"] app-traffic-analytics-map,
-[dir="rtl"] app-customer-pin-point-map,
-[dir="rtl"] app-global-user-map,
-[dir="rtl"] .mapOne,
-[dir="rtl"] .mapTwo {
+/* Force code blocks and syntax highlighting to always remain LTR */
+pre,
+code,
+pre code,
+.line-numbers,
+[class*="language-"],
+.prism-code {
   direction: ltr !important;
   text-align: left !important;
+  unicode-bidi: isolate;
 }
 
-[dir="rtl"] div[class*="am5-"] svg text,
-[dir="rtl"] div[class*="am5-"] text {
-  direction: ltr !important;
-  unicode-bidi: embed;
+/* Sidebar accordion animation using CSS Grid */
+.menu-accordion {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms ease-in-out;
 }
+.menu-accordion.open {
+  grid-template-rows: 1fr;
+}
+.menu-accordion > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ApexCharts tooltip arrow */
+.apexcharts-tooltip-arrow {
+  @apply !border-gray-200 !bg-white dark:!border-gray-800 dark:!bg-gray-900;
+}
+
+/* API Token chart transparent tooltip */
+.api-token-chart .apexcharts-tooltip {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Map Two — specific vector map overrides */
+#mapTwo .jvectormap-container {
+  @apply bg-transparent!;
+}
+.jvm-region.jvm-element {
+  @apply !fill-gray-300 hover:!fill-brand-500 dark:!fill-gray-700 dark:hover:!fill-brand-500;
+}
+#mapTwo .jvectormap-region.jvectormap-element {
+  fill: #9cb9ff !important;
+  stroke: transparent !important;
+}
+#mapTwo .jvectormap-region.jvectormap-element:hover {
+  fill: #8098f9 !important;
+}
+.dark #mapTwo .jvectormap-region.jvectormap-element {
+  fill: #9cb9ff !important;
+}
+#mapTwo .jvectormap-region[data-code="US"] {
+  fill: #465fff !important;
+}
+#mapTwo .jvectormap-marker.jvectormap-element {
+  fill: #465fff !important;
+  stroke: #ffffff !important;
+  stroke-width: 1.5 !important;
+  fill-opacity: 1 !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+}
+#mapTwo .jvectormap-marker.jvectormap-element:first-of-type {
+  stroke: #ffffff !important;
+  stroke-width: 2 !important;
+  filter: drop-shadow(0 0 3px rgba(70, 95, 255, 0.4)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+}
+
+/* Sales-by-country map (jsvectormap) */
+#mapTwo .jvm-container {
+  @apply bg-transparent!;
+}
+#mapTwo .jvm-region.jvm-element {
+  fill: #9cb9ff !important;
+  stroke: transparent !important;
+}
+#mapTwo .jvm-region.jvm-element:hover {
+  fill: #8098f9 !important;
+}
+.dark #mapTwo .jvm-region.jvm-element {
+  fill: #9cb9ff !important;
+}
+#mapTwo .jvm-region[data-code="US"] {
+  fill: #465fff !important;
+}
+#mapTwo .jvm-marker.jvm-element {
+  fill: #465fff !important;
+  stroke: #ffffff !important;
+  stroke-width: 1.5 !important;
+  fill-opacity: 1 !important;
+}
+
+/* Customer Pin-Point Map */
+#mapCustomerPinPoint .jvectormap-region.jvm-element {
+  fill: #c5d8ff !important;
+  stroke: white !important;
+  stroke-width: 2 !important;
+}
+#mapCustomerPinPoint .jvectormap-region[data-code="US-CA"] { fill: #465fff !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-NV"] { fill: #465fff !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-NY"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-FL"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-MI"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-WA"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-TX"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-IL"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-PA"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-OH"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-GA"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-NC"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-CO"] { fill: #9cb9ff !important; }
+#mapCustomerPinPoint .jvectormap-region[data-code="US-AZ"] { fill: #9cb9ff !important; }
+#mapCustomerPinPoint .jvectormap-region.jvectormap-element:hover { fill: #465fff !important; }
+.dark #mapCustomerPinPoint .jvectormap-region.jvectormap-element { stroke: #1f2937 !important; }
+#mapCustomerPinPoint .jvectormap-marker.jvectormap-element {
+  fill: #465fff !important;
+  stroke: white !important;
+  stroke-width: 2 !important;
+  fill-opacity: 1 !important;
+}
+
+/* jsvectormap (Vector Map page) - same look as the Next.js jvectormap styles */
+.jvm-container {
+  @apply !bg-gray-50 dark:!bg-gray-900;
+}
+.jvm-marker.jvm-element {
+  @apply !stroke-gray-200 dark:!stroke-gray-800;
+}
+.jvm-tooltip {
+  @apply !border-none !bg-brand-500 !px-2 !py-1 !text-xs;
+}
+
+/* Country Traffic Analytics */
+#mapTrafficAnalytics .jvm-region[data-code="US"] { fill: #3538cd !important; }
+#mapTrafficAnalytics .jvm-region[data-code="CA"] { fill: #8098f9 !important; }
+#mapTrafficAnalytics .jvm-region[data-code="CN"] { fill: #8098f9 !important; }
+#mapTrafficAnalytics .jvm-region[data-code="FR"] { fill: #9cb9ff !important; }
+#mapTrafficAnalytics .jvm-region[data-code="BR"] { fill: #9cb9ff !important; }
+#mapTrafficAnalytics .jvm-region[data-code="RU"] { fill: #9cb9ff !important; }
+#mapTrafficAnalytics .jvm-region[data-code="AU"] { fill: #adc6ff !important; }
+
+/* Customer Pin-Point Map */
+#mapCustomerPinPoint .jvm-region.jvm-element {
+  fill: #c5d8ff !important;
+  stroke: white !important;
+  stroke-width: 2 !important;
+}
+#mapCustomerPinPoint .jvm-region[data-code="US-CA"] { fill: #465fff !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-NV"] { fill: #465fff !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-NY"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-FL"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-MI"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-WA"] { fill: #3538cd !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-TX"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-IL"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-PA"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-OH"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-GA"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-NC"] { fill: #8098f9 !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-CO"] { fill: #9cb9ff !important; }
+#mapCustomerPinPoint .jvm-region[data-code="US-AZ"] { fill: #9cb9ff !important; }
+#mapCustomerPinPoint .jvm-region.jvm-element:hover { fill: #465fff !important; }
+.dark #mapCustomerPinPoint .jvm-region.jvm-element { stroke: #1f2937 !important; }
+#mapCustomerPinPoint .jvm-marker.jvm-element {
+  fill: #465fff !important;
+  stroke: white !important;
+  stroke-width: 2 !important;
+  fill-opacity: 1 !important;
+}
+
+/* AI Settings range input */
+.ai-settings-range {
+  @apply h-2 w-full cursor-pointer appearance-none rounded-full bg-gray-200 outline-hidden dark:bg-gray-800;
+}
+.ai-settings-range {
+  --track: #e5e7eb;
+  --value: 0%;
+  background: linear-gradient(to right, #465fff 0%, #465fff var(--value), var(--track) var(--value), var(--track) 100%);
+}
+:is([dir='rtl'], .rtl) .ai-settings-range {
+  background: linear-gradient(to left, #465fff 0%, #465fff var(--value), var(--track) var(--value), var(--track) 100%);
+}
+.dark .ai-settings-range {
+  --track: #1f2937;
+}
+.ai-settings-range::-webkit-slider-thumb {
+  @apply size-5 cursor-pointer appearance-none rounded-full border-2 border-brand-500 bg-white shadow-xs;
+}
+.ai-settings-range::-moz-range-thumb {
+  @apply size-5 cursor-pointer appearance-none rounded-full border-2 border-brand-500 bg-white shadow-xs;
+}
+
+/* FullCalendar CSS variables */
+:root {
+  --fc-classic-border: var(--color-gray-200);
+}
+.dark {
+  --fc-classic-border: var(--color-gray-800);
+}
+
+/* simplebar RTL fix */
+.simplebar-track.simplebar-vertical {
+  @apply rtl:right-auto! rtl:left-0!;
+}
+
+.cdk-overlay-container {
+  z-index: 99999;
+}
+
+.cdk-overlay-pane {
+  background: transparent !important;
+}
+

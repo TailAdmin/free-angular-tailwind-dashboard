@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Campaign } from './types';
 import { featuredCampaignsData } from './data';
 import { CampaignRowComponent } from './campaign-row.component';
-import { ClickOutsideDirective } from '../../../../directive/click-outside.directive';
-import { TABLE_IMPORTS } from '../../../ui/table';
-import { ButtonComponent } from '../../../ui/button/button.component';
+import { ClickOutsideDirective } from '../../../../../shared/directive/click-outside.directive';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 
 @Component({
   selector: 'app-table-four',

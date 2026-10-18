@@ -15,7 +15,7 @@ import {
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { Subscription } from 'rxjs';
-import { ThemeService } from '../../../../services/theme.service';
+import { ThemeService } from '../../../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-line-chart-two',

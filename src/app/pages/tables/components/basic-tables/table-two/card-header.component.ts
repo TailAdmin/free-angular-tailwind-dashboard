@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ClickOutsideDirective } from '../../../../directive/click-outside.directive';
+import { ClickOutsideDirective } from '../../../../../shared/directive/click-outside.directive';
 import { DealStatus } from './types';
-import { ButtonComponent } from '../../../ui/button/button.component';
-import { InputDirective } from '../../../ui/input/input.directive';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
+import { InputDirective } from '../../../../../shared/components/ui/input/input.directive';
 
 @Component({
   selector: 'app-table-two-card-header',

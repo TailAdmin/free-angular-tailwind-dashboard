@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from '../../../ui/button/button.component';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 
 @Component({
   selector: 'app-table-three-card-footer',

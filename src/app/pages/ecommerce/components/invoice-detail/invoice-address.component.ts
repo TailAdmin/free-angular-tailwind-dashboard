@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SeparatorComponent } from '../ui/separator/separator.component';
+import { SeparatorComponent } from '../../../../shared/components/ui/separator/separator.component';
 import { defaultInvoiceData } from './data';
 import { InvoiceParty } from './types';
 

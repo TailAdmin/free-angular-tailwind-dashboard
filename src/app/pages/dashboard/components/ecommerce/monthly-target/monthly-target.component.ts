@@ -7,12 +7,12 @@ import {
   ApexStroke,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import { DropdownItemComponent } from '../../../ui/dropdown/dropdown-item/dropdown-item.component';
-import { DropdownComponent } from '../../../ui/dropdown/dropdown.component';
+import { DropdownItemComponent } from '../../../../../shared/components/ui/dropdown/dropdown-item/dropdown-item.component';
+import { DropdownComponent } from '../../../../../shared/components/ui/dropdown/dropdown.component';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from '../../../../services/theme.service';
+import { ThemeService } from '../../../../../shared/services/theme.service';
 import { Subscription } from 'rxjs';
-import { ButtonComponent } from '../../../ui/button/button.component';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 
 @Component({
   selector: 'app-monthly-target',

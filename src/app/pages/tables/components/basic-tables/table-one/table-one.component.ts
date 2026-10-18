@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { tableData } from './data';
 import { Order } from './types';
 import { TableOneRowComponent } from './table-one-row.component';
-import { TABLE_IMPORTS } from '../../../ui/table';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
 
 @Component({
   selector: 'app-table-one',

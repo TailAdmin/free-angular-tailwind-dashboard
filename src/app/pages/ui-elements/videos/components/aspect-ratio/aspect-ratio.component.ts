@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ComponentCardComponent } from '../../../common/component-card/component-card.component';
-import { VideoComponent } from '../../video/video.component';
+import { ComponentCardComponent } from '../../../../../shared/components/common/component-card/component-card.component';
+import { VideoComponent } from '../../../../../shared/components/ui/video/video.component';
 
 @Component({
   selector: 'app-video-aspect-ratio-previews',

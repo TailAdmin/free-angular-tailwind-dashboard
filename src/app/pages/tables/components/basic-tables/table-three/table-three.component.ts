@@ -5,7 +5,7 @@ import { CardHeaderComponent } from './card-header.component';
 import { latestTransactionsData } from './data';
 import { TransactionRowComponent } from './transaction-row.component';
 import { Transaction } from './types';
-import { TABLE_IMPORTS } from '../../../ui/table';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
 
 @Component({
   selector: 'app-table-three',

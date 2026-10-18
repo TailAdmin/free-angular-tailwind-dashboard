@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ButtonComponent } from '../ui/button/button.component';
-import { InputDirective } from '../ui/input/input.directive';
+import { ButtonComponent } from '../../../../shared/components/ui/button/button.component';
+import { InputDirective } from '../../../../shared/components/ui/input/input.directive';
 
 @Component({
   selector: 'app-invoice-sidebar',

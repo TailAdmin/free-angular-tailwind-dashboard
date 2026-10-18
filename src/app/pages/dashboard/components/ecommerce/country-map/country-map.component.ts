@@ -3,7 +3,7 @@ import {
   VectorMapInstance,
   VectorMapMarker,
   createVectorMap,
-} from '../../../maps/vector-map/jvectormap';
+} from '../../../../../shared/components/maps/vector-map/jvectormap';
 
 const defaultMarkers: VectorMapMarker[] = [
   { name: 'USA', coords: [37.2580397, -104.657039] },

@@ -15,9 +15,9 @@ import {
   ApexYAxis,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import { areaChartCrosshairs, areaChartTooltip } from '../../../../utils/apex-tooltip';
-import { ButtonComponent } from '../../../ui/button/button.component';
-import { InputDirective } from '../../../ui/input/input.directive';
+import { areaChartCrosshairs, areaChartTooltip } from '../../../../../shared/utils/apex-tooltip';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
+import { InputDirective } from '../../../../../shared/components/ui/input/input.directive';
 
 type StatisticTab = 'overview' | 'sales' | 'revenue';
 

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { DropdownItemComponent } from '../../../ui/dropdown/dropdown-item/dropdown-item.component';
-import { DropdownComponent } from '../../../ui/dropdown/dropdown.component';
+import { DropdownItemComponent } from '../../../../../shared/components/ui/dropdown/dropdown-item/dropdown-item.component';
+import { DropdownComponent } from '../../../../../shared/components/ui/dropdown/dropdown.component';
 import { CountryMapComponent } from '../country-map/country-map.component';
-import { ButtonComponent } from '../../../ui/button/button.component';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 
 interface DemographicCountry {
   name: string;

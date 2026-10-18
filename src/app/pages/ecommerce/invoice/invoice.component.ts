@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { PageBreadcrumbComponent } from '../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
-import { InvoiceSidebarComponent, InvoiceMainComponent } from '../../shared/components/invoice';
+import { PageBreadcrumbComponent } from '../../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
+import { InvoiceSidebarComponent, InvoiceMainComponent } from '../components/invoice-detail';
 
 @Component({
-  selector: 'app-invoices',
+  selector: 'app-invoice',
   imports: [
     PageBreadcrumbComponent,
     InvoiceSidebarComponent,
     InvoiceMainComponent,
   ],
-  templateUrl: './invoices.component.html',
+  templateUrl: './invoice.component.html',
   styles: ``,
 })
-export class InvoicesComponent {}
+export class InvoiceComponent {}

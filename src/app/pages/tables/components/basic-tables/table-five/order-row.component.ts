@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AnalyticsOrder } from './types';
-import { TABLE_IMPORTS } from '../../../ui/table';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
 
 const categoryMap: Record<string, string> = {
   uiKits: 'UI Kits',

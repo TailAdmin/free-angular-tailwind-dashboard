@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ButtonComponent } from '../ui/button/button.component';
-import { SeparatorComponent } from '../ui/separator/separator.component';
+import { ButtonComponent } from '../../../../shared/components/ui/button/button.component';
+import { SeparatorComponent } from '../../../../shared/components/ui/separator/separator.component';
 
 @Component({
   selector: 'app-invoice-actions',

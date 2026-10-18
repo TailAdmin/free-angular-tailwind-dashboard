@@ -18,7 +18,7 @@ import { BusyIndicatorComponent } from '../../../shared/components/ui/avatar/bus
     OfflineIndicatorComponent,
     BusyIndicatorComponent,
   ],
-  templateUrl: './avatar-element.component.html',
+  templateUrl: './avatars.component.html',
   styles: ``
 })
 export class AvatarElementComponent {

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Transaction } from './types';
-import { TABLE_IMPORTS } from '../../../ui/table';
-import { ButtonComponent } from '../../../ui/button/button.component';
+import { TABLE_IMPORTS } from '../../../../../shared/components/ui/table';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 
 @Component({
   selector: '[app-table-three-transaction-row]',

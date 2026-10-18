@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from '../../../ui/button/button.component';
-import { InputDirective } from '../../../ui/input/input.directive';
+import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
+import { InputDirective } from '../../../../../shared/components/ui/input/input.directive';
 
 @Component({
   selector: 'app-table-three-card-header',

@@ -7,7 +7,7 @@ import {
   TableThreeComponent,
   TableFourComponent,
   TableFiveComponent,
-} from '../../../shared/components/tables/basic-tables';
+} from '../components/basic-tables';
 
 @Component({
   selector: 'app-basic-tables',

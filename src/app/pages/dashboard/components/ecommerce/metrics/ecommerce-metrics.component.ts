@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BadgeComponent } from '../../../ui/badge/badge.component';
-import { SafeHtmlPipe } from '../../../../pipe/safe-html.pipe';
+import { BadgeComponent } from '../../../../../shared/components/ui/badge/badge.component';
+import { SafeHtmlPipe } from '../../../../../shared/pipe/safe-html.pipe';
 
 @Component({
   selector: 'app-ecommerce-metrics',
