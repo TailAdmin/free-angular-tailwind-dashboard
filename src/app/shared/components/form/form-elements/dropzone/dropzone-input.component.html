@@ -1,0 +1,243 @@
+<div class="w-full">
+  <div
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    (click)="fileInput.click()"
+    class="relative flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed p-7 text-center transition-all duration-200 outline-hidden lg:p-10"
+    [ngClass]="getBorderColor()"
+  >
+    <!-- Hidden file input -->
+    <input
+      #fileInput
+      type="file"
+      multiple
+      accept="image/png, image/jpeg, image/webp, image/svg+xml"
+      class="hidden"
+      (change)="onFileSelected($event)"
+    />
+
+    <div class="flex flex-col items-center">
+      <!-- Circular Upload Icon -->
+      <div
+        class="mb-4 flex size-17 items-center justify-center rounded-full bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+      >
+        <svg
+          class="size-7 text-current"
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+        >
+          <path
+            d="M15 11.25a.75.75 0 01.75.75v1.5a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25V12a.75.75 0 011.5 0v1.5c0 .414.335.75.75.75h9a.75.75 0 00.75-.75V12a.75.75 0 01.75-.75zm-5.998-9a.744.744 0 01.547.241L13 5.937A.75.75 0 0111.938 7L9.752 4.813V12a.75.75 0 01-1.5 0V4.809l-2.19 2.19A.75.75 0 015 5.938l3.468-3.466a.745.745 0 01.532-.222z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+
+      <!-- Heading -->
+      <h4 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white/90">
+        @if (isDragReject) {
+          File type not supported
+        } @else if (isDragAccept) {
+          Drop images here
+        } @else if (isDragActive) {
+          Drop files here
+        } @else {
+          Drop File Here
+        }
+      </h4>
+
+      <!-- Subtitle -->
+      <p class="mb-4 max-w-72.5 text-sm text-gray-700 dark:text-gray-400">
+        @if (isDragReject) {
+          Only PNG, JPG, WebP, and SVG images up to 5MB are allowed
+        } @else {
+          Drag and drop your PNG, JPG, WebP, SVG images here or browse
+        }
+      </p>
+
+      <!-- Browse Action -->
+      <span class="text-sm font-medium text-brand-500 underline hover:text-brand-600">
+        Browse File
+      </span>
+    </div>
+  </div>
+
+  <!-- Uploaded Images Preview Gallery -->
+  @if (files.length > 0) {
+    <div class="mt-6 space-y-4">
+      <div class="flex items-center justify-between">
+        <h5 class="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Uploaded Images ({{ files.length }})
+        </h5>
+        <button app-button variant="unstyled"
+          type="button"
+          (click)="clearAllFiles()"
+          class="text-xs font-medium text-error-500 hover:text-error-600 dark:text-error-400 cursor-pointer"
+        >
+          Clear all
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+        @for (file of files; track file.name + '-' + file.lastModified) {
+          <div
+            class="group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-theme-xs transition hover:shadow-theme-sm dark:border-gray-800 dark:bg-gray-900"
+          >
+            <!-- Image Preview Container -->
+            <div class="relative aspect-4/3 w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+              @if (file.preview) {
+                <img
+                  [src]="file.preview"
+                  [alt]="file.name"
+                  class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              } @else {
+                <div class="flex h-full w-full items-center justify-center text-gray-400">
+                  <svg
+                    class="size-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                  >
+                    <path
+                      d="M15 11.25a.75.75 0 01.75.75v1.5a2.25 2.25 0 01-2.25 2.25h-9a2.25 2.25 0 01-2.25-2.25V12a.75.75 0 011.5 0v1.5c0 .414.335.75.75.75h9a.75.75 0 00.75-.75V12a.75.75 0 01.75-.75zm-5.998-9a.744.744 0 01.547.241L13 5.937A.75.75 0 0111.938 7L9.752 4.813V12a.75.75 0 01-1.5 0V4.809l-2.19 2.19A.75.75 0 015 5.938l3.468-3.466a.745.745 0 01.532-.222z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+              }
+
+              <!-- Hover Action Overlay -->
+              <div
+                class="absolute inset-0 flex items-center justify-center gap-2 bg-gray-900/60 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+              >
+                @if (file.preview) {
+                  <button app-button variant="unstyled"
+                    type="button"
+                    (click)="handleOpenPreview(file)"
+                    class="flex size-8 items-center justify-center rounded-full bg-white/90 text-gray-800 backdrop-blur-xs transition hover:bg-white dark:bg-gray-800/90 dark:text-white dark:hover:bg-gray-800 cursor-pointer"
+                    title="Preview image"
+                    [attr.aria-label]="'Preview ' + file.name"
+                  >
+                    <svg
+                      class="size-4"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M10 13.862a6.519 6.519 0 01-6.077-4.16 6.519 6.519 0 0112.154 0A6.519 6.519 0 0110 13.862zm0-9.819a8.019 8.019 0 00-7.585 5.416.75.75 0 000 .487 8.019 8.019 0 0015.17 0 .75.75 0 000-.487A8.019 8.019 0 0010 4.043zm-.008 3.801a1.858 1.858 0 100 3.716h.014a1.858 1.858 0 000-3.716h-.014z"
+                      />
+                    </svg>
+                  </button>
+                }
+                <button app-button variant="unstyled"
+                  type="button"
+                  (click)="removeFile(file.name)"
+                  class="flex size-8 items-center justify-center rounded-full bg-white/90 text-error-500 backdrop-blur-xs transition hover:bg-white dark:bg-gray-800/90 dark:text-error-400 dark:hover:bg-gray-800 cursor-pointer"
+                  title="Remove image"
+                  [attr.aria-label]="'Remove ' + file.name"
+                >
+                  <svg
+                    class="size-4"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M6.541 3.792a2.25 2.25 0 012.25-2.25h2.417a2.25 2.25 0 012.25 2.25v.25H16.666a.75.75 0 010 1.5h-.29v10.666a2.25 2.25 0 01-2.25 2.25h-8.25a2.25 2.25 0 01-2.25-2.25V5.541h-.292a.75.75 0 110-1.5H6.54v-.25zm8.334 9.454V5.541h-9.75v10.667c0 .414.336.75.75.75h8.25a.75.75 0 00.75-.75v-2.962zM8.041 4.041h3.917v-.25a.75.75 0 00-.75-.75H8.791a.75.75 0 00-.75.75v.25zM8.334 8a.75.75 0 01.75.75v5a.75.75 0 11-1.5 0v-5a.75.75 0 01.75-.75zm4.083.75a.75.75 0 00-1.5 0v5a.75.75 0 101.5 0v-5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- File Metadata -->
+            <div class="p-3">
+              <p
+                class="truncate text-xs font-medium text-gray-800 dark:text-white/90"
+                [title]="file.name"
+              >
+                {{ file.name }}
+              </p>
+              <p class="mt-0.5 text-[11px] text-gray-500 dark:text-gray-400">
+                {{ formatFileSize(file.size) }}
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Image Preview Dialog / Modal -->
+  @if (isModalOpen && previewImage) {
+    <div
+      class="fixed inset-0 z-99999 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-xs"
+      (click)="handleClosePreview()"
+    >
+      <div
+        class="relative w-full max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 shadow-theme-lg dark:border-gray-800 dark:bg-gray-900 sm:p-8"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="mb-4 flex items-start justify-between">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+              Image Preview
+            </h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              {{ previewImage.name }} • {{ formatFileSize(previewImage.size) }}
+            </p>
+          </div>
+          <button app-button variant="unstyled"
+            type="button"
+            (click)="handleClosePreview()"
+            class="text-gray-400 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
+          >
+            <svg
+              class="size-5"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div
+          class="relative aspect-video w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-gray-800 flex items-center justify-center"
+        >
+          @if (previewImage.preview) {
+            <img
+              [src]="previewImage.preview"
+              [alt]="previewImage.name"
+              class="max-h-full max-w-full object-contain"
+            />
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,35 @@
+<div class="max-w-full overflow-x-auto custom-scrollbar">
+  <div class="min-w-[560px] xl:min-w-full">
+    <div class="flex items-center gap-4">
+      <!-- Time axis column -->
+      <div class="flex h-[261px] shrink-0 flex-col items-start pb-[30px]">
+        @for (time of timeLabels; track $index) {
+          <div class="flex min-h-px w-[55px] flex-1 items-center justify-start text-start">
+            <span class="font-outfit text-xs font-normal text-gray-700 dark:text-gray-400">
+              {{ time }}
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Tracker grid & Day labels column -->
+      <div class="flex flex-1 flex-col gap-7">
+        <!-- Heatmap / tracker grid -->
+        <div class="grid h-[231.2px] w-full grid-cols-7 grid-rows-6 gap-x-2 gap-y-1">
+          @for (bgClass of gridSlots; track $index) {
+            <div [class]="'rounded-lg ' + bgClass"></div>
+          }
+        </div>
+
+        <!-- Day labels row -->
+        <div class="flex items-center justify-between text-center font-outfit text-xs font-normal text-gray-700 dark:text-gray-400">
+          @for (day of dayLabels; track $index) {
+            <span class="flex-1">
+              {{ day }}
+            </span>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { CommonModule } from '@angular/common';
 import { AppSidebarComponent } from '../app-sidebar/app-sidebar.component';
@@ -27,6 +27,13 @@ export class AppLayoutComponent {
     this.isExpanded$ = this.sidebarService.isExpanded$;
     this.isHovered$ = this.sidebarService.isHovered$;
     this.isMobileOpen$ = this.sidebarService.isMobileOpen$;
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    if (window.innerWidth >= 1280) {
+      this.sidebarService.setMobileOpen(false);
+    }
   }
 
   get containerClasses() {

@@ -1,0 +1,41 @@
+<div class="flex flex-col gap-5">
+  <div class="max-w-full overflow-x-auto custom-scrollbar">
+    <div class="min-w-[650px] xl:min-w-full">
+      <apx-chart
+        [series]="chartOptions.series!"
+        [chart]="chartOptions.chart!"
+        [plotOptions]="chartOptions.plotOptions!"
+        [colors]="chartOptions.colors!"
+        [dataLabels]="chartOptions.dataLabels!"
+        [stroke]="chartOptions.stroke!"
+        [xaxis]="chartOptions.xaxis!"
+        [yaxis]="chartOptions.yaxis!"
+        [grid]="chartOptions.grid!"
+        [tooltip]="chartOptions.tooltip!"
+        [legend]="chartOptions.legend!"
+      ></apx-chart>
+    </div>
+  </div>
+
+  <!-- Legend Indicators -->
+  <div class="flex items-center gap-[26px] py-3 ps-4">
+    <div class="flex items-center gap-1.5">
+      <span class="size-2 rounded-full bg-brand-500"></span>
+      <span class="text-sm font-normal text-gray-700 dark:text-gray-300">
+        Website
+      </span>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <span class="size-2 rounded-full bg-brand-300"></span>
+      <span class="text-sm font-normal text-gray-700 dark:text-gray-300">
+        Email
+      </span>
+    </div>
+    <div class="flex items-center gap-1.5">
+      <span class="size-2 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      <span class="text-sm font-normal text-gray-700 dark:text-gray-300">
+        Social Media
+      </span>
+    </div>
+  </div>
+</div>

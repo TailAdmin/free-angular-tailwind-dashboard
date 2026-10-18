@@ -1,23 +1,23 @@
 <div class="grid grid-cols-12 gap-4 md:gap-6">
-  <div class="col-span-12 space-y-6 xl:col-span-7">
-    <div><app-ecommerce-metrics /></div>
+  <div class="col-span-12 flex flex-col gap-4 md:gap-6 xl:col-span-7">
+    <app-ecommerce-metrics class="block" />
 
-    <div><app-monthly-sales-chart /></div>
+    <app-monthly-sales-chart class="block" />
   </div>
 
   <div class="col-span-12 xl:col-span-5">
-    <app-monthly-target />
+    <app-monthly-target class="block h-full" />
   </div>
 
   <div class="col-span-12">
-    <app-statics-chart />
+    <app-statistics-chart class="block" />
   </div>
 
   <div class="col-span-12 xl:col-span-5">
-    <app-demographic-card />
+    <app-demographic-card class="block h-full" />
   </div>
 
   <div class="col-span-12 xl:col-span-7">
-    <app-recent-orders/>
+    <app-recent-orders class="block" />
   </div>
 </div>

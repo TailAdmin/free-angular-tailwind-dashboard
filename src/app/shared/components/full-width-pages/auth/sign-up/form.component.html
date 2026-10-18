@@ -1,0 +1,291 @@
+<form
+  [formGroup]="signUpForm"
+  (ngSubmit)="onSubmit()"
+  [class]="'space-y-5 ' + className"
+  noValidate
+>
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    <div
+      role="group"
+      data-slot="field"
+      data-orientation="vertical"
+      class="group/field flex w-full gap-2 flex-col *:w-full [&>.sr-only]:w-auto"
+      [attr.data-invalid]="isFieldInvalid('fname') ? 'true' : null"
+    >
+      <label class="group/field-label peer/field-label flex w-fit gap-2 text-sm leading-snug font-medium text-gray-700 select-none dark:text-gray-400 mb-1.5 block">
+        First Name <span class="text-red-500">*</span>
+      </label>
+      <input app-input unstyled
+        formControlName="fname"
+        type="text"
+        placeholder="Enter your first name"
+        class="h-11 w-full min-w-0 rounded-[10px] border border-gray-300 bg-white py-2.5 ps-4 pe-4 text-sm font-normal text-gray-800 shadow-theme-xs outline-hidden transition-colors placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-500 dark:focus:border-brand-500/40"
+        [class.border-red-500]="isFieldInvalid('fname')"
+        [class.ring-3]="isFieldInvalid('fname')"
+        [class.ring-red-500/20]="isFieldInvalid('fname')"
+        [attr.aria-invalid]="isFieldInvalid('fname') ? 'true' : null"
+      />
+      @if (isFieldInvalid('fname')) {
+        <div role="alert" class="text-sm font-normal text-red-500 dark:text-red-400">
+          {{ getFieldError('fname') }}
+        </div>
+      }
+    </div>
+
+    <div
+      role="group"
+      data-slot="field"
+      data-orientation="vertical"
+      class="group/field flex w-full gap-2 flex-col *:w-full [&>.sr-only]:w-auto"
+      [attr.data-invalid]="isFieldInvalid('lname') ? 'true' : null"
+    >
+      <label class="group/field-label peer/field-label flex w-fit gap-2 text-sm leading-snug font-medium text-gray-700 select-none dark:text-gray-400 mb-1.5 block">
+        Last Name <span class="text-red-500">*</span>
+      </label>
+      <input app-input unstyled
+        formControlName="lname"
+        type="text"
+        placeholder="Enter your last name"
+        class="h-11 w-full min-w-0 rounded-[10px] border border-gray-300 bg-white py-2.5 ps-4 pe-4 text-sm font-normal text-gray-800 shadow-theme-xs outline-hidden transition-colors placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-500 dark:focus:border-brand-500/40"
+        [class.border-red-500]="isFieldInvalid('lname')"
+        [class.ring-3]="isFieldInvalid('lname')"
+        [class.ring-red-500/20]="isFieldInvalid('lname')"
+        [attr.aria-invalid]="isFieldInvalid('lname') ? 'true' : null"
+      />
+      @if (isFieldInvalid('lname')) {
+        <div role="alert" class="text-sm font-normal text-red-500 dark:text-red-400">
+          {{ getFieldError('lname') }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div
+    role="group"
+    data-slot="field"
+    data-orientation="vertical"
+    class="group/field flex w-full gap-2 flex-col *:w-full [&>.sr-only]:w-auto"
+    [attr.data-invalid]="isFieldInvalid('email') ? 'true' : null"
+  >
+    <label class="group/field-label peer/field-label flex w-fit gap-2 text-sm leading-snug font-medium text-gray-700 select-none dark:text-gray-400 mb-1.5 block">
+      Email <span class="text-red-500">*</span>
+    </label>
+    <input app-input unstyled
+      formControlName="email"
+      type="email"
+      placeholder="Enter your email"
+      class="h-11 w-full min-w-0 rounded-[10px] border border-gray-300 bg-white py-2.5 ps-4 pe-4 text-sm font-normal text-gray-800 shadow-theme-xs outline-hidden transition-colors placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-500 dark:focus:border-brand-500/40"
+      [class.border-red-500]="isFieldInvalid('email')"
+      [class.ring-3]="isFieldInvalid('email')"
+      [class.ring-red-500/20]="isFieldInvalid('email')"
+      [attr.aria-invalid]="isFieldInvalid('email') ? 'true' : null"
+    />
+    @if (isFieldInvalid('email')) {
+      <div role="alert" class="text-sm font-normal text-red-500 dark:text-red-400">
+        {{ getFieldError('email') }}
+      </div>
+    }
+  </div>
+
+  <div
+    role="group"
+    data-slot="field"
+    data-orientation="vertical"
+    class="group/field flex w-full gap-2 flex-col *:w-full [&>.sr-only]:w-auto"
+    [attr.data-invalid]="isFieldInvalid('password') ? 'true' : null"
+  >
+    <label class="group/field-label peer/field-label flex w-fit gap-2 text-sm leading-snug font-medium text-gray-700 select-none dark:text-gray-400 mb-1.5 block">
+      Password <span class="text-red-500">*</span>
+    </label>
+    <div
+      class="group/input-group relative flex h-11 w-full min-w-0 items-center rounded-[10px] border border-gray-300 bg-white shadow-theme-xs outline-hidden transition-colors focus-within:border-brand-300 focus-within:ring-3 focus-within:ring-brand-500/20 dark:border-gray-700 dark:bg-gray-900 dark:focus-within:border-brand-500/40"
+      [class.border-red-500]="isFieldInvalid('password')"
+      [class.ring-3]="isFieldInvalid('password')"
+      [class.ring-red-500/20]="isFieldInvalid('password')"
+    >
+      <input
+        formControlName="password"
+        [type]="showPassword ? 'text' : 'password'"
+        placeholder="Enter your password"
+        class="h-full flex-1 min-w-0 rounded-none border-0 bg-transparent py-2.5 ps-4 pe-2 text-sm font-normal text-gray-800 shadow-none outline-hidden placeholder:text-gray-400 focus:outline-hidden dark:text-white/90 dark:placeholder:text-gray-500"
+        [attr.aria-invalid]="isFieldInvalid('password') ? 'true' : null"
+      />
+      <div class="order-last flex h-auto items-center justify-center pe-3.5 select-none">
+        <button app-button variant="unstyled"
+          type="button"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          class="flex size-7 items-center justify-center rounded-md p-0 text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-white"
+        >
+          @if (showPassword) {
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              class="size-5 fill-current"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M10 13.862a6.519 6.519 0 01-6.077-4.16 6.519 6.519 0 0112.154 0A6.519 6.519 0 0110 13.862zm0-9.819a8.019 8.019 0 00-7.585 5.416.75.75 0 000 .487 8.019 8.019 0 0015.17 0 .75.75 0 000-.487A8.019 8.019 0 0010 4.043zm-.008 3.801a1.858 1.858 0 100 3.716h.014a1.858 1.858 0 000-3.716h-.014z"
+              />
+            </svg>
+          } @else {
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              class="size-5 fill-current"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M4.638 3.577a.75.75 0 00-1.06 1.06l1.275 1.277a8.03 8.03 0 00-2.437 3.545.75.75 0 000 .487 8.019 8.019 0 0011.083 4.614l1.864 1.863a.75.75 0 101.06-1.06L4.638 3.576zm7.723 9.844l-1.914-1.913c-.14.034-.289.053-.44.053h-.015a1.858 1.858 0 01-1.803-2.312l-2.27-2.27a6.532 6.532 0 00-1.996 2.723 6.518 6.518 0 008.438 3.72zm3.716-3.719a6.516 6.516 0 01-1.257 2.03l1.061 1.06a8.012 8.012 0 001.704-2.846.75.75 0 000-.487A8.019 8.019 0 007.522 4.433l1.23 1.23a6.519 6.519 0 017.326 4.04z"
+              />
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+    @if (isFieldInvalid('password')) {
+      <div role="alert" class="text-sm font-normal text-red-500 dark:text-red-400">
+        {{ getFieldError('password') }}
+      </div>
+    }
+  </div>
+
+  <div
+    role="group"
+    data-slot="field"
+    data-orientation="vertical"
+    class="group/field flex w-full gap-2 flex-col *:w-full [&>.sr-only]:w-auto"
+    [attr.data-invalid]="isFieldInvalid('confirmPassword') ? 'true' : null"
+  >
+    <label class="group/field-label peer/field-label flex w-fit gap-2 text-sm leading-snug font-medium text-gray-700 select-none dark:text-gray-400 mb-1.5 block">
+      Confirm Password <span class="text-red-500">*</span>
+    </label>
+    <div
+      class="group/input-group relative flex h-11 w-full min-w-0 items-center rounded-[10px] border border-gray-300 bg-white shadow-theme-xs outline-hidden transition-colors focus-within:border-brand-300 focus-within:ring-3 focus-within:ring-brand-500/20 dark:border-gray-700 dark:bg-gray-900 dark:focus-within:border-brand-500/40"
+      [class.border-red-500]="isFieldInvalid('confirmPassword')"
+      [class.ring-3]="isFieldInvalid('confirmPassword')"
+      [class.ring-red-500/20]="isFieldInvalid('confirmPassword')"
+    >
+      <input
+        formControlName="confirmPassword"
+        [type]="showConfirmPassword ? 'text' : 'password'"
+        placeholder="Re-enter your password"
+        class="h-full flex-1 min-w-0 rounded-none border-0 bg-transparent py-2.5 ps-4 pe-2 text-sm font-normal text-gray-800 shadow-none outline-hidden placeholder:text-gray-400 focus:outline-hidden dark:text-white/90 dark:placeholder:text-gray-500"
+        [attr.aria-invalid]="isFieldInvalid('confirmPassword') ? 'true' : null"
+      />
+      <div class="order-last flex h-auto items-center justify-center pe-3.5 select-none">
+        <button app-button variant="unstyled"
+          type="button"
+          (click)="toggleConfirmPasswordVisibility()"
+          [attr.aria-label]="showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'"
+          class="flex size-7 items-center justify-center rounded-md p-0 text-gray-500 transition-colors hover:bg-gray-50 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700/50 dark:hover:text-white"
+        >
+          @if (showConfirmPassword) {
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              class="size-5 fill-current"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M10 13.862a6.519 6.519 0 01-6.077-4.16 6.519 6.519 0 0112.154 0A6.519 6.519 0 0110 13.862zm0-9.819a8.019 8.019 0 00-7.585 5.416.75.75 0 000 .487 8.019 8.019 0 0015.17 0 .75.75 0 000-.487A8.019 8.019 0 0010 4.043zm-.008 3.801a1.858 1.858 0 100 3.716h.014a1.858 1.858 0 000-3.716h-.014z"
+              />
+            </svg>
+          } @else {
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              class="size-5 fill-current"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M4.638 3.577a.75.75 0 00-1.06 1.06l1.275 1.277a8.03 8.03 0 00-2.437 3.545.75.75 0 000 .487 8.019 8.019 0 0011.083 4.614l1.864 1.863a.75.75 0 101.06-1.06L4.638 3.576zm7.723 9.844l-1.914-1.913c-.14.034-.289.053-.44.053h-.015a1.858 1.858 0 01-1.803-2.312l-2.27-2.27a6.532 6.532 0 00-1.996 2.723 6.518 6.518 0 008.438 3.72zm3.716-3.719a6.516 6.516 0 01-1.257 2.03l1.061 1.06a8.012 8.012 0 001.704-2.846.75.75 0 000-.487A8.019 8.019 0 007.522 4.433l1.23 1.23a6.519 6.519 0 017.326 4.04z"
+              />
+            </svg>
+          }
+        </button>
+      </div>
+    </div>
+    @if (isFieldInvalid('confirmPassword')) {
+      <div role="alert" class="text-sm font-normal text-red-500 dark:text-red-400">
+        {{ getFieldError('confirmPassword') }}
+      </div>
+    }
+  </div>
+
+  <div
+    role="group"
+    data-slot="field"
+    data-orientation="horizontal"
+    class="group/field flex items-start gap-3"
+  >
+    <label for="terms" class="flex items-start gap-3 cursor-pointer">
+      <div class="relative mt-0.5 flex size-4 shrink-0 items-center justify-center">
+        <input
+          type="checkbox"
+          id="terms"
+          formControlName="terms"
+          class="peer size-4 cursor-pointer appearance-none rounded-md border border-gray-300 bg-white shadow-theme-xs outline-hidden transition-colors hover:border-brand-500 focus-visible:border-brand-500 focus-visible:ring-3 focus-visible:ring-brand-500/20 checked:border-brand-500 checked:bg-brand-500 dark:border-gray-700 dark:bg-gray-900 dark:hover:border-brand-400 dark:checked:border-brand-500 dark:checked:bg-brand-500"
+          [class.border-red-500]="isFieldInvalid('terms')"
+          [class.ring-3]="isFieldInvalid('terms')"
+          [class.ring-red-500/20]="isFieldInvalid('terms')"
+        />
+        <svg
+          class="pointer-events-none absolute size-3 text-white hidden peer-checked:block"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="inline-block cursor-pointer text-sm font-normal text-gray-500 dark:text-gray-400">
+          By creating an account means you agree to the{{' '}}
+          <span class="text-gray-800 dark:text-white/90">
+            Terms and Conditions,
+          </span>{{' '}}
+          and our{{' '}}
+          <span class="text-gray-800 dark:text-white">
+            Privacy Policy
+          </span>
+        </span>
+        @if (isFieldInvalid('terms')) {
+          <div role="alert" class="text-sm font-normal text-red-500 dark:text-red-400">
+            {{ getFieldError('terms') }}
+          </div>
+        }
+      </div>
+    </label>
+  </div>
+
+  <div>
+    <button app-button variant="unstyled"
+      type="submit"
+      [disabled]="isSubmitting"
+      class="inline-flex items-center justify-center gap-2 rounded-[10px] transition-all h-11 px-5 py-3 text-sm bg-brand-500 text-white shadow-theme-xs hover:bg-brand-600 disabled:bg-brand-200 dark:disabled:bg-brand-800 w-full disabled:cursor-not-allowed font-medium"
+    >
+      {{ (isSubmitting ? 'Signing Up...' : 'Sign Up') }}
+    </button>
+  </div>
+</form>

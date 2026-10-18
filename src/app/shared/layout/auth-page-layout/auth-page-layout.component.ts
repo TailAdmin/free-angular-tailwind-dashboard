@@ -8,7 +8,7 @@ import { ThemeToggleTwoComponent } from '../../components/common/theme-toggle-tw
   imports: [
     GridShapeComponent,
     RouterModule,
-    ThemeToggleTwoComponent,
+    ThemeToggleTwoComponent
   ],
   templateUrl: './auth-page-layout.component.html',
   styles: ``

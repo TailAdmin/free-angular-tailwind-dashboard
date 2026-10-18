@@ -5,7 +5,11 @@ import { Component, Input } from '@angular/core';
   selector: 'app-component-card',
   imports: [],
   templateUrl: './component-card.component.html',
-  styles: ``
+  styles: `
+    :host {
+      display: block;
+    }
+  `
 })
 export class ComponentCardComponent {
 

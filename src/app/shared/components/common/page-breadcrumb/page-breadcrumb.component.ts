@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterModule,
   ],
+  host: {
+    class: 'block',
+  },
   templateUrl: './page-breadcrumb.component.html',
   styles: ``
 })

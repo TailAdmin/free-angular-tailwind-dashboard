@@ -1,24 +1,16 @@
 import { Component } from '@angular/core';
 import { ComponentCardComponent } from '../../../common/component-card/component-card.component';
-import { RadioComponent } from '../../input/radio.component';
-import { FormsModule } from '@angular/forms';
+import { DefaultRadioButtonsComponent } from './default-radio-buttons.component';
+import { LabeledRadioButtonsComponent } from './labeled-radio-buttons.component';
 
 @Component({
   selector: 'app-radio-buttons',
+  host: { class: 'block' },
   imports: [
     ComponentCardComponent,
-    RadioComponent,
-    FormsModule
+    DefaultRadioButtonsComponent,
+    LabeledRadioButtonsComponent,
   ],
   templateUrl: './radio-buttons.component.html',
-  styles: ``
 })
-export class RadioButtonsComponent {
-
-  selectedValue: string = 'option2';
-
-  handleRadioChange(value: string) {
-    console.log(value,'value')
-    this.selectedValue = value;
-  }
-}
+export class RadioButtonsComponent {}

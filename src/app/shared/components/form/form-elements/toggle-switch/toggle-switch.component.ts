@@ -1,19 +1,13 @@
 import { Component } from '@angular/core';
-import { SwitchComponent } from '../../input/switch.component';
 import { ComponentCardComponent } from '../../../common/component-card/component-card.component';
+import { ToggleSwitchInputComponent } from './toggle-switch-input.component';
 
 @Component({
   selector: 'app-toggle-switch',
-  imports: [
-    SwitchComponent,
-    ComponentCardComponent,
-  ],
+  imports: [ComponentCardComponent, ToggleSwitchInputComponent],
+  host: {
+    class: 'block',
+  },
   templateUrl: './toggle-switch.component.html',
-  styles: ``
 })
-export class ToggleSwitchComponent {
-
-  handleSwitchChange(checked: boolean) {
-    console.log('Switch is now:', checked ? 'ON' : 'OFF');
-  }
-}
+export class ToggleSwitchComponent {}

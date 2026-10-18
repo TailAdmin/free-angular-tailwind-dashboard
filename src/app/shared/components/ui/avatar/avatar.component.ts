@@ -1,56 +1,138 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal, viewChild } from '@angular/core';
+import { BrnAvatarFallback, BrnAvatarImage } from '@spartan-ng/brain/avatar';
 
-type AvatarSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge';
-type AvatarStatus = 'online' | 'offline' | 'busy' | 'none';
+export type AvatarSize =
+  | 'xs'
+  | 'sm'
+  | 'default'
+  | 'medium'
+  | 'lg'
+  | 'xl'
+  | 'xsmall'
+  | 'small'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge';
 
+export type AvatarStatus = 'online' | 'offline' | 'busy' | 'none';
 
 @Component({
   selector: 'app-avatar',
-  imports: [CommonModule],
-  template:`
-    <div class="relative rounded-full" [ngClass]="sizeClasses[size]">
-    <!-- Avatar Image -->
-    <img [src]="src" [alt]="alt" class="object-cover rounded-full" />
-
-    <!-- Status Indicator -->
-    @if (status !== 'none') {
-    <span
-      class="absolute bottom-0 right-0 rounded-full border-[1.5px] border-white dark:border-gray-900"
-      [ngClass]="statusSizeClasses[size] + ' ' + (statusColorClasses[status] || '')"
-    ></span>
+  imports: [CommonModule, BrnAvatarImage, BrnAvatarFallback],
+  host: {
+    '[attr.data-slot]': '"avatar"',
+    '[attr.data-size]': 'normalizedSize',
+    '[class]':
+      '"group/avatar relative flex shrink-0 rounded-full select-none dark:after:mix-blend-lighten " + sizeClasses[normalizedSize] + " " + className',
+  },
+  template: `
+    @if (src) {
+      <img
+        brnAvatarImage
+        data-slot="avatar-image"
+        [src]="src"
+        [alt]="alt"
+        class="aspect-square size-full rounded-full object-cover"
+        [class.hidden]="!image()?.canShow()"
+      />
     }
-  </div>
-  `
+
+    @if (fallback && (!src || !image()?.canShow())) {
+      <span
+        brnAvatarFallback
+        data-slot="avatar-fallback"
+        class="absolute inset-0 flex size-full items-center justify-center rounded-full bg-[#F3F4F6] text-gray-700 dark:bg-[rgba(255,255,255,0.05)] dark:text-gray-400 {{ fallbackTextSizeClasses[normalizedSize] }}"
+      >
+        {{ fallback }}
+      </span>
+    }
+
+    @if (status !== 'none') {
+      <span
+        data-slot="avatar-badge"
+        [attr.data-variant]="status"
+        class="text-primary-foreground absolute top-0 end-0 z-10 inline-flex items-center justify-center rounded-full bg-blend-color ring-2 ring-white select-none dark:ring-black {{ statusSizeClasses[normalizedSize] }} {{ statusColorClasses[status] }}"
+      ></span>
+    }
+
+    <ng-content></ng-content>
+  `,
 })
 export class AvatarComponent {
-
-  @Input() src!: string;
-  @Input() alt: string = 'User Avatar';
-  @Input() size: AvatarSize = 'medium';
+  @Input() src?: string;
+  @Input() alt: string = 'user avatar';
+  @Input() size: AvatarSize = 'default';
   @Input() status: AvatarStatus = 'none';
+  @Input() fallback: string = '';
+  @Input() className: string = '';
 
-  sizeClasses: Record<AvatarSize, string> = {
-    xsmall: 'h-6 w-6 max-w-6',
-    small: 'h-8 w-8 max-w-8',
-    medium: 'h-10 w-10 max-w-10',
-    large: 'h-12 w-12 max-w-12',
-    xlarge: 'h-14 w-14 max-w-14',
-    xxlarge: 'h-16 w-16 max-w-16',
+  // load / error state comes from spartan's brain avatar image directive
+  protected readonly image = viewChild(BrnAvatarImage);
+
+  // state reported by the composable <app-avatar-image> child (see avatar-image / avatar-fallback)
+  isImageLoaded = signal(false);
+  isImageError = signal(false);
+
+  onImageLoaded() {
+    this.isImageLoaded.set(true);
+    this.isImageError.set(false);
+  }
+
+  onImageError() {
+    this.isImageError.set(true);
+    this.isImageLoaded.set(false);
+  }
+
+  get normalizedSize(): 'xs' | 'sm' | 'default' | 'lg' | 'xl' {
+    switch (this.size) {
+      case 'xs':
+      case 'xsmall':
+        return 'xs';
+      case 'sm':
+      case 'small':
+        return 'sm';
+      case 'lg':
+      case 'large':
+        return 'lg';
+      case 'xl':
+      case 'xlarge':
+      case 'xxlarge':
+        return 'xl';
+      case 'default':
+      case 'medium':
+      default:
+        return 'default';
+    }
+  }
+
+  sizeClasses: Record<'xs' | 'sm' | 'default' | 'lg' | 'xl', string> = {
+    xs: 'size-6',
+    sm: 'size-8',
+    default: 'size-10',
+    lg: 'size-12',
+    xl: 'size-14',
   };
 
-  statusSizeClasses: Record<AvatarSize, string> = {
-    xsmall: 'h-1.5 w-1.5 max-w-1.5',
-    small: 'h-2 w-2 max-w-2',
-    medium: 'h-2.5 w-2.5 max-w-2.5',
-    large: 'h-3 w-3 max-w-3',
-    xlarge: 'h-3.5 w-3.5 max-w-3.5',
-    xxlarge: 'h-4 w-4 max-w-4',
+  fallbackTextSizeClasses: Record<'xs' | 'sm' | 'default' | 'lg' | 'xl', string> = {
+    xs: 'text-xs',
+    sm: 'text-xs',
+    default: 'text-sm',
+    lg: 'text-base',
+    xl: 'text-lg',
+  };
+
+  statusSizeClasses: Record<'xs' | 'sm' | 'default' | 'lg' | 'xl', string> = {
+    xs: 'size-1.5',
+    sm: 'size-2',
+    default: 'size-2.5',
+    lg: 'size-3',
+    xl: 'size-3.5',
   };
 
   statusColorClasses: Record<Exclude<AvatarStatus, 'none'>, string> = {
-    online: 'bg-success-500',
-    offline: 'bg-error-400',
-    busy: 'bg-warning-500',
+    online: 'bg-green-500',
+    offline: 'bg-red-500',
+    busy: 'bg-amber-500',
   };
 }

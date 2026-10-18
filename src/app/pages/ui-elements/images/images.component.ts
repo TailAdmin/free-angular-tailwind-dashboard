@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { PageBreadcrumbComponent } from './../../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
+import { PageBreadcrumbComponent } from '../../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
 import { ComponentCardComponent } from '../../../shared/components/common/component-card/component-card.component';
-import { ResponsiveImageComponent } from '../../../shared/components/ui/images/responsive-image/responsive-image.component';
-import { ThreeColumnImageGridComponent } from '../../../shared/components/ui/images/three-column-image-grid/three-column-image-grid.component';
-import { TwoColumnImageGridComponent } from '../../../shared/components/ui/images/two-column-image-grid/two-column-image-grid.component';
+import { ResponsiveImageComponent } from '../../../shared/components/images/responsive/responsive.component';
+import { TwoColumnImageGridComponent } from '../../../shared/components/images/two-column-grid/two-column-grid.component';
+import { ThreeColumnImageGridComponent } from '../../../shared/components/images/three-column-grid/three-column-grid.component';
 
 @Component({
   selector: 'app-images',
@@ -11,12 +11,10 @@ import { TwoColumnImageGridComponent } from '../../../shared/components/ui/image
     PageBreadcrumbComponent,
     ComponentCardComponent,
     ResponsiveImageComponent,
-    ThreeColumnImageGridComponent,
     TwoColumnImageGridComponent,
+    ThreeColumnImageGridComponent,
   ],
   templateUrl: './images.component.html',
-  styles: ``
+  styles: ``,
 })
-export class ImagesComponent {
-
-}
+export class ImagesComponent {}

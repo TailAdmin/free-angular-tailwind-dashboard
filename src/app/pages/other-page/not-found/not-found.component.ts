@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import { GridShapeComponent } from '../../../shared/components/common/grid-shape/grid-shape.component';
-import { RouterModule } from '@angular/router';
+import { Error404Component } from '../../../shared/components/full-width-pages';
 
 @Component({
   selector: 'app-not-found',
-  imports: [
-    GridShapeComponent,
-    RouterModule,
-  ],
-  templateUrl: './not-found.component.html',
-  styles: ``
+  imports: [Error404Component],
+  host: {
+    class: 'block w-full',
+  },
+  template: `<app-error-404 />`,
 })
-export class NotFoundComponent {
-
-  currentYear: number = new Date().getFullYear();
-}
+export class NotFoundComponent {}

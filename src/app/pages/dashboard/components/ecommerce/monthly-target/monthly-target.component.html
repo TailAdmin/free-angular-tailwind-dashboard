@@ -1,0 +1,152 @@
+<div class="flex h-full flex-col justify-between rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/3">
+  <div class="shadow-default flex flex-1 flex-col justify-between rounded-2xl bg-white px-5 pt-5 pb-5 sm:px-6 sm:pt-6 sm:pb-11 dark:bg-gray-900">
+    <div class="flex justify-between">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+          Monthly Target
+        </h3>
+        <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+          Target you’ve set for each month
+        </p>
+      </div>
+      <div class="relative inline-block">
+        <button app-button variant="unstyled"
+          class="dropdown-toggle inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-800 dark:text-gray-300 dark:hover:bg-gray-700/50 dark:hover:text-white"
+          [ngClass]="{ 'bg-gray-50 text-gray-800 dark:bg-gray-700/50 dark:text-white': isOpen }"
+          (click)="toggleDropdown()"
+          aria-label="Toggle options"
+          type="button"
+        >
+          <svg
+            class="size-5 stroke-current"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="1" />
+            <circle cx="19" cy="12" r="1" />
+            <circle cx="5" cy="12" r="1" />
+          </svg>
+        </button>
+
+        <app-dropdown [isOpen]="isOpen" (close)="closeDropdown()" className="w-40">
+          <app-dropdown-item (itemClick)="closeDropdown()">
+            View More
+          </app-dropdown-item>
+          <app-dropdown-item variant="destructive" (itemClick)="closeDropdown()">
+            Delete
+          </app-dropdown-item>
+        </app-dropdown>
+      </div>
+    </div>
+
+    <div>
+      <div class="relative">
+        <div class="max-h-45 overflow-hidden" id="chartDarkStyle">
+          <apx-chart
+            [series]="series"
+            [chart]="chart"
+            [plotOptions]="plotOptions"
+            [fill]="fill"
+            [stroke]="stroke"
+            [labels]="labels"
+            [colors]="colors"
+          />
+        </div>
+        <span
+          class="absolute bottom-2.5 left-1/2 -translate-x-1/2 rounded-full bg-green-50 px-3 py-1 text-xs font-medium text-green-600 dark:bg-green-500/15 dark:text-green-500"
+        >
+          +10%
+        </span>
+      </div>
+      <p class="mx-auto mt-4.5 w-full max-w-95 text-center text-sm text-gray-500 sm:text-base dark:text-gray-400">
+        You earn $3287 today, it's higher than last month. Keep up your good work!
+      </p>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-center gap-5 px-6 py-3 sm:gap-8 sm:py-5">
+    <div>
+      <p class="mb-1 text-center text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+        Target
+      </p>
+      <p
+        class="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 sm:text-lg dark:text-white/90"
+      >
+        $20K
+        <svg
+          class="text-red-500 fill-current"
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M5.315 10.376c.137.153.336.25.558.25h.001a.748.748 0 00.531-.22l3-2.998a.75.75 0 10-1.06-1.06l-1.722 1.72V1.875a.75.75 0 10-1.5 0v6.19L3.405 6.346a.75.75 0 00-1.06 1.061l2.97 2.968z"
+            fill="currentColor"
+          />
+        </svg>
+      </p>
+    </div>
+    <div class="h-7 w-px bg-gray-200 dark:bg-gray-800"></div>
+    <div>
+      <p class="mb-1 text-center text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+        Revenue
+      </p>
+      <p
+        class="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 sm:text-lg dark:text-white/90"
+      >
+        $70K
+        <svg
+          class="text-green-500 fill-current"
+          width="13"
+          height="12"
+          viewBox="0 0 13 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M6.065 1.624a.748.748 0 01.558-.25h.001c.192 0 .384.073.531.22l3 2.998a.75.75 0 11-1.06 1.06l-1.722-1.72v6.193a.75.75 0 01-1.5 0v-6.19L4.155 5.654a.75.75 0 01-1.06-1.061l2.97-2.968z"
+            fill="currentColor"
+          />
+        </svg>
+      </p>
+    </div>
+    <div class="h-7 w-px bg-gray-200 dark:bg-gray-800"></div>
+    <div>
+      <p class="mb-1 text-center text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+        Today
+      </p>
+      <p
+        class="flex items-center justify-center gap-1 text-base font-semibold text-gray-800 sm:text-lg dark:text-white/90"
+      >
+        $30K
+        <svg
+          class="text-green-500 fill-current"
+          width="13"
+          height="12"
+          viewBox="0 0 13 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M6.065 1.624a.748.748 0 01.558-.25h.001c.192 0 .384.073.531.22l3 2.998a.75.75 0 11-1.06 1.06l-1.722-1.72v6.193a.75.75 0 01-1.5 0v-6.19L4.155 5.654a.75.75 0 01-1.06-1.061l2.97-2.968z"
+            fill="currentColor"
+          />
+        </svg>
+      </p>
+    </div>
+  </div>
+</div>

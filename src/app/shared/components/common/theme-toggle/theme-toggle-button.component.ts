@@ -1,18 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ThemeService } from '../../../services/theme.service';
-import { CommonModule } from '@angular/common';
+import { ButtonComponent } from '../../ui/button/button.component';
 
 @Component({
   selector: 'app-theme-toggle-button',
   templateUrl: './theme-toggle-button.component.html',
-  imports:[CommonModule]
+  imports: [ButtonComponent, CommonModule]
 })
 export class ThemeToggleButtonComponent {
-  
-  theme$;
+  isDarkMode$;
 
   constructor(private themeService: ThemeService) {
-    this.theme$ = this.themeService.theme$;
+    this.isDarkMode$ = this.themeService.isDarkMode$;
   }
 
   toggleTheme() {

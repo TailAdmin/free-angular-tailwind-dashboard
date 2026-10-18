@@ -1,0 +1,95 @@
+<div
+  class="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pt-4 pb-3 sm:px-6 dark:border-gray-800 dark:bg-white/3"
+>
+  <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+        Recent Orders
+      </h3>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button app-button variant="outline">
+        <svg
+          class="stroke-current"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M14.653 5.905a2.57 2.57 0 00-5.141 0m5.141 0a2.57 2.57 0 01-5.141 0m5.141 0h3.055m-8.196 0h-7.22m3.055 8.192a2.57 2.57 0 015.141 0m-5.141 0a2.57 2.57 0 005.141 0m-5.141 0H2.292m8.196 0h7.22"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        Filter
+      </button>
+      <button app-button variant="outline">
+        See all
+      </button>
+    </div>
+  </div>
+
+  <div class="max-w-full overflow-x-auto">
+    <table app-table class="w-full text-start">
+      <thead app-table-header class="border-y border-gray-100 dark:border-gray-800">
+        <tr app-table-row>
+          <th app-table-cell class="py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400">
+            Products
+          </th>
+          <th app-table-cell class="py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400">
+            Category
+          </th>
+          <th app-table-cell class="py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400">
+            Price
+          </th>
+          <th app-table-cell class="py-3 text-start text-xs font-medium text-gray-500 dark:text-gray-400">
+            Status
+          </th>
+        </tr>
+      </thead>
+      <tbody app-table-body class="divide-y divide-gray-100 dark:divide-gray-800">
+        @for (product of tableData; track product.id) {
+          <tr app-table-row>
+            <td app-table-cell class="py-3">
+              <div class="flex items-center gap-3">
+                <div class="h-12.5 w-12.5 overflow-hidden rounded-md">
+                  <img
+                    [src]="product.image"
+                    [alt]="product.name"
+                    class="h-12.5 w-12.5 object-cover"
+                    width="50"
+                    height="50"
+                  />
+                </div>
+                <div>
+                  <p class="text-sm font-medium text-gray-800 dark:text-white/90">
+                    {{ product.name }}
+                  </p>
+                  <span class="text-xs text-gray-500 dark:text-gray-400">
+                    {{ product.variants }}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td app-table-cell class="py-3 text-sm text-gray-500 dark:text-gray-400">
+              {{ product.category }}
+            </td>
+            <td app-table-cell class="py-3 text-sm text-gray-500 dark:text-gray-400">
+              {{ product.price }}
+            </td>
+            <td app-table-cell class="py-3 text-sm text-gray-500 dark:text-gray-400">
+              <app-badge size="sm" [color]="getBadgeColor(product.status)">
+                {{ product.status }}
+              </app-badge>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

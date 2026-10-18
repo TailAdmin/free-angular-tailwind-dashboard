@@ -1,54 +1,28 @@
-
 import { Component } from '@angular/core';
-import { LabelComponent } from '../../label/label.component';
-import { InputFieldComponent } from '../../input/input-field.component';
-import { SelectComponent } from '../../select/select.component';
-import { DatePickerComponent } from '../../date-picker/date-picker.component';
 import { ComponentCardComponent } from '../../../common/component-card/component-card.component';
-import { TimePickerComponent } from '../../time-picker/time-picker.component';
+import { BasicInputComponent } from './basic-input.component';
+import { InputWithPlaceholderComponent } from './input-with-placeholder.component';
+import { SelectInputComponent } from './select-input.component';
+import { PasswordInputComponent } from './password-input.component';
+import { DatePickerInputComponent } from './date-picker-input.component';
+import { TimeSelectInputComponent } from './time-select-input.component';
+import { PaymentInputComponent } from './payment-input.component';
 
 @Component({
   selector: 'app-default-inputs',
   imports: [
     ComponentCardComponent,
-    LabelComponent,
-    InputFieldComponent,
-    SelectComponent,
-    DatePickerComponent,
-    TimePickerComponent
-],
+    BasicInputComponent,
+    InputWithPlaceholderComponent,
+    SelectInputComponent,
+    PasswordInputComponent,
+    DatePickerInputComponent,
+    TimeSelectInputComponent,
+    PaymentInputComponent,
+  ],
+  host: {
+    class: 'block',
+  },
   templateUrl: './default-inputs.component.html',
-  styles: ``
 })
-export class DefaultInputsComponent {
-
-  showPassword = false;
-  options = [
-    { value: 'marketing', label: 'Marketing' },
-    { value: 'template', label: 'Template' },
-    { value: 'development', label: 'Development' },
-  ];
-  selectedOption = '';
-  dateValue: any;
-  timeValue = '';
-  cardNumber = '';
-
-  handleSelectChange(value: string) {
-    this.selectedOption = value;
-    console.log('Selected value:', value);
-  }
-
-  handleDateChange(event: any) {
-    this.dateValue = event;
-    console.log('Date changed:', event);
-  }
-
-  handleTimeChange(event: any) {
-    this.timeValue = event.target.value;
-    console.log(this.timeValue);
-  }
-
-  onTimeSelected(time: string) {
-    console.log('Picked time:', time); // e.g. "10:45"
-  }
-}
+export class DefaultInputsComponent {}

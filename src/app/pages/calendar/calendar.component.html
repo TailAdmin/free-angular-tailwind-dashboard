@@ -1,0 +1,29 @@
+<div>
+  <app-page-breadcrumb pageTitle="Calendar" />
+
+  <div
+    class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/3"
+    [attr.data-color-scheme]="currentTheme"
+  >
+    <div
+      class="custom-calendar relative"
+      [class.fc-multimonth]="currentView === 'multiMonthYear'"
+      [attr.data-color-scheme]="currentTheme"
+      #calendarContainer
+    >
+      <full-calendar
+        #calendar
+        [options]="calendarOptions"
+      ></full-calendar>
+    </div>
+  </div>
+
+  <app-event-modal
+    [isOpen]="isOpen"
+    [selectedEvent]="selectedEvent"
+    [initialStartDate]="selectedStartDate"
+    [initialEndDate]="selectedEndDate"
+    (close)="closeModal()"
+    (save)="handleSaveEvent($event)"
+  ></app-event-modal>
+</div>

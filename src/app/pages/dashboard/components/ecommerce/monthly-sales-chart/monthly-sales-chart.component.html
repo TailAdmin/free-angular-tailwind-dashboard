@@ -1,0 +1,62 @@
+<div
+  class="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 pt-5 pb-5 sm:px-6 sm:pt-6 sm:pb-5 dark:border-gray-800 dark:bg-white/3"
+>
+  <div class="flex items-center justify-between">
+    <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+      Monthly Sales
+    </h3>
+    <div class="relative inline-block">
+      <button app-button variant="unstyled"
+        class="dropdown-toggle inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-gray-700 hover:bg-gray-50 hover:text-gray-800 dark:text-gray-300 dark:hover:bg-gray-700/50 dark:hover:text-white"
+        [ngClass]="{ 'bg-gray-50 text-gray-800 dark:bg-gray-700/50 dark:text-white': isOpen }"
+        (click)="toggleDropdown()"
+        aria-label="Toggle options"
+        type="button"
+      >
+        <svg
+          class="size-5 stroke-current"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="1" />
+          <circle cx="19" cy="12" r="1" />
+          <circle cx="5" cy="12" r="1" />
+        </svg>
+      </button>
+
+      <app-dropdown [isOpen]="isOpen" (close)="closeDropdown()" className="w-40">
+        <app-dropdown-item (itemClick)="closeDropdown()">
+          View More
+        </app-dropdown-item>
+        <app-dropdown-item variant="destructive" (itemClick)="closeDropdown()">
+          Delete
+        </app-dropdown-item>
+      </app-dropdown>
+    </div>
+  </div>
+
+  <div class="custom-scrollbar max-w-full overflow-x-auto">
+    <div class="min-w-162.5 xl:min-w-full">
+      <apx-chart
+        [series]="series"
+        [chart]="chart"
+        [xaxis]="xaxis"
+        [plotOptions]="plotOptions"
+        [dataLabels]="dataLabels"
+        [stroke]="stroke"
+        [legend]="legend"
+        [yaxis]="yaxis"
+        [grid]="grid"
+        [fill]="fill"
+        [tooltip]="tooltip"
+        [colors]="colors"
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="max-w-full overflow-x-auto custom-scrollbar">
+  <div class="flex min-w-[420px] flex-col gap-5 xl:min-w-full">
+    <!-- Progress Bar Row -->
+    <div class="flex w-full items-center gap-0.5">
+      <div class="h-8 min-w-px flex-1 rounded bg-[#7592FF]"></div>
+      <div class="h-8 w-[42px] shrink-0 rounded bg-[#7CD4FD]"></div>
+      <div class="h-8 w-[26px] shrink-0 rounded bg-[#BDB4FE]"></div>
+      <div class="h-8 w-10 shrink-0 rounded bg-[#FE9EFE]"></div>
+      <div class="h-8 w-[13px] shrink-0 rounded bg-[#6FEAA6]"></div>
+      <div class="h-8 w-[52px] shrink-0 rounded bg-[#D0D5DD] dark:bg-gray-700"></div>
+    </div>
+
+    <!-- Spending Categories Grid -->
+    <div class="grid grid-cols-2 gap-x-3 gap-y-3">
+      @for (category of categories; track category.name) {
+        <div class="flex items-center gap-2">
+          <span
+            [class]="'size-2.5 shrink-0 rounded-full ' + category.color"
+          ></span>
+          <span class="text-sm font-normal text-gray-700 dark:text-gray-300">
+            {{ category.name }}
+          </span>
+        </div>
+      }
+    </div>
+  </div>
+</div>

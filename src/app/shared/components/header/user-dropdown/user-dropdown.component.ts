@@ -1,8 +1,11 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { DropdownService } from '../../../services/dropdown.service';
+import { ButtonComponent } from '../../ui/button/button.component';
 
-export interface Language {
+interface Language {
   id: string;
   name: string;
   shortName: string;
@@ -12,11 +15,11 @@ export interface Language {
 
 @Component({
   selector: 'app-user-dropdown',
-  standalone: true,
   templateUrl: './user-dropdown.component.html',
-  imports: [CommonModule, RouterModule]
+  imports: [ButtonComponent, CommonModule, RouterModule]
 })
-export class UserDropdownComponent implements OnInit {
+export class UserDropdownComponent implements OnInit, OnDestroy {
+  readonly dropdownId = 'user-dropdown';
   isOpen = false;
   subDropdownOpen = false;
   currentLocale = 'en';
@@ -49,17 +52,33 @@ export class UserDropdownComponent implements OnInit {
     },
   ];
 
-  constructor(private elementRef: ElementRef) {}
+  private sub = new Subscription();
+
+  constructor(
+    private elementRef: ElementRef,
+    private dropdownService: DropdownService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     const savedDir = localStorage.getItem('dir');
-    if (savedDir === 'rtl' || document.documentElement.getAttribute('dir') === 'rtl') {
-      this.currentLocale = 'ar';
-      document.documentElement.setAttribute('dir', 'rtl');
-    } else {
-      this.currentLocale = 'en';
-      document.documentElement.setAttribute('dir', 'ltr');
-    }
+    const isRtl = savedDir === 'rtl' || document.documentElement.getAttribute('dir') === 'rtl';
+    this.currentLocale = isRtl ? 'ar' : 'en';
+    document.documentElement.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+
+    this.sub.add(
+      this.dropdownService.activeDropdown$.subscribe((activeId) => {
+        this.isOpen = activeId === this.dropdownId;
+        if (!this.isOpen) {
+          this.subDropdownOpen = false;
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.clearSubCloseTimer();
+    this.sub.unsubscribe();
   }
 
   get currentLang(): Language {
@@ -68,32 +87,49 @@ export class UserDropdownComponent implements OnInit {
 
   toggleDropdown(event?: Event): void {
     event?.stopPropagation();
-    this.isOpen = !this.isOpen;
-    if (!this.isOpen) {
-      this.subDropdownOpen = false;
-    }
+    this.dropdownService.toggle(this.dropdownId);
   }
 
   closeDropdown(): void {
-    this.isOpen = false;
-    this.subDropdownOpen = false;
+    this.dropdownService.close(this.dropdownId);
   }
+
+  private subCloseTimer?: ReturnType<typeof setTimeout>;
 
   toggleSubDropdown(event: Event): void {
     event.stopPropagation();
+    this.clearSubCloseTimer();
     this.subDropdownOpen = !this.subDropdownOpen;
+  }
+
+  /** Language flyout opens on hover (like Next.js). */
+  openSubDropdown(): void {
+    this.clearSubCloseTimer();
+    this.subDropdownOpen = true;
+  }
+
+  /** Small delay so the pointer can travel from the trigger to the flyout. */
+  scheduleCloseSubDropdown(): void {
+    this.clearSubCloseTimer();
+    this.subCloseTimer = setTimeout(() => {
+      this.subDropdownOpen = false;
+      this.cdr.detectChanges();
+    }, 120);
+  }
+
+  private clearSubCloseTimer(): void {
+    if (this.subCloseTimer) {
+      clearTimeout(this.subCloseTimer);
+      this.subCloseTimer = undefined;
+    }
   }
 
   selectLanguage(id: string, event?: Event): void {
     event?.stopPropagation();
     this.currentLocale = id;
-    if (id === 'ar') {
-      document.documentElement.setAttribute('dir', 'rtl');
-      localStorage.setItem('dir', 'rtl');
-    } else {
-      document.documentElement.setAttribute('dir', 'ltr');
-      localStorage.setItem('dir', 'ltr');
-    }
+    const dir = id === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.setAttribute('dir', dir);
+    localStorage.setItem('dir', dir);
     this.closeDropdown();
   }
 
