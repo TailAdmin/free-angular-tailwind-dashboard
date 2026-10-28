@@ -104,7 +104,7 @@ TailAdmin Angular ships with a rich set of **ready-to-use dashboard features**:
 
 ## Changelog
 
-### Version 1.3.0 - [October 18, 2026]
+### Version 1.3.0 - [October 28, 2026]
 
 - **Design Refresh**: Refactored UI components built on `@spartan-ng/brain` headless primitives.
 - **Updated Pages**: Refreshed and updated all pages for improved consistency, usability, and design..
@@ -112,6 +112,9 @@ TailAdmin Angular ships with a rich set of **ready-to-use dashboard features**:
 - **Vector Map**: The eCommerce customer demographic map now uses `jsvectormap` instead of AmCharts.
 - **RTL Improvements**: Enhanced right-to-left (RTL) layout support and fixed related styling and alignment issues.
 - **Dependencies**: Added `@spartan-ng/brain` (pinned to 1.6.3), `@floating-ui/dom`, `jsvectormap` and `tw-animate-css`. Removed `@amcharts/amcharts5`, `@amcharts/amcharts5-geodata`, `@popperjs/core`, `ng-otp-input` and `prismjs`.
+- **Page Metadata**: Added unique page titles and meta descriptions for every route in `src/app/core/page-metadata`.
+- **Folder Structure**: Reorganized `src/app` into `core`, `layout`, `shared` and `pages`.
+- **Cleanup**: Removed unused components (modals demo, progress bar item, UI barrel files) and unused images, and refreshed `AGENTS.md` with common agent workflows and verification commands.
 
 ### Version 1.2.0 - [September 02, 2026]
 

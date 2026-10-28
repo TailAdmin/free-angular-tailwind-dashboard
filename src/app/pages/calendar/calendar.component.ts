@@ -24,7 +24,7 @@ import themePlugin from 'fullcalendar/themes/classic';
 import timeGridPlugin from 'fullcalendar/timegrid';
 import { Subscription } from 'rxjs';
 import { PageBreadcrumbComponent } from '../../shared/components/common/page-breadcrumb/page-breadcrumb.component';
-import { ThemeService } from '../../shared/services/theme.service';
+import { ThemeService } from '../../core/services/theme.service';
 import { renderCalendarEvent } from './event-item';
 import { EventModalComponent } from './event-modal.component';
 import {

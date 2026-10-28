@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { SidebarService } from '../../services/sidebar.service';
+import { SidebarService } from '../../../core/services/sidebar.service';
 import { CommonModule } from '@angular/common';
 import { AppSidebarComponent } from '../app-sidebar/app-sidebar.component';
 import { BackdropComponent } from '../backdrop/backdrop.component';

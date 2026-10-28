@@ -10,7 +10,7 @@ import {
 import { DropdownItemComponent } from '../../../../../shared/components/ui/dropdown/dropdown-item/dropdown-item.component';
 import { DropdownComponent } from '../../../../../shared/components/ui/dropdown/dropdown.component';
 import { CommonModule } from '@angular/common';
-import { ThemeService } from '../../../../../shared/services/theme.service';
+import { ThemeService } from '../../../../../core/services/theme.service';
 import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
 

@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnIn
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DropdownService } from '../../../services/dropdown.service';
-import { ButtonComponent } from '../../ui/button/button.component';
+import { DropdownService } from '../../../core/services/dropdown.service';
+import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 
 interface Language {
   id: string;

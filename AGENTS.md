@@ -7,6 +7,11 @@
 ```
 src/
 ├── app/
+│   ├── core/
+│   │   └── services/             # Core singleton services (theme, sidebar, dropdown, live-directionality)
+│   ├── layout/
+│   │   ├── shell/                # Master layouts & navigation shells (app-layout, app-header, app-sidebar, auth-page-layout, backdrop)
+│   │   └── header/               # Header widgets (user-dropdown, notification-dropdown)
 │   ├── pages/                    # One folder per feature. Components used only by that feature live in <feature>/components/
 │   │   ├── auth-pages/           # Sign in, Sign up
 │   │   ├── blank/                # Blank starter page (+ components/)
@@ -24,13 +29,11 @@ src/
 │   │   │   ├── common/           # Shared wrappers (component-card, page-breadcrumb, theme-toggle, grid-shape)
 │   │   │   ├── form/             # Form controls (input, select, multi-select, date-picker, time-picker, ...)
 │   │   │   ├── full-width-pages/ # Sign in, sign up and 404 page content
-│   │   │   ├── header/           # Header widgets (user-dropdown, notification-dropdown)
 │   │   │   ├── maps/             # jsvectormap helper and map data
 │   │   │   └── ui/               # Core UI primitives built on @spartan-ng/brain (alert, avatar, badge, button, dropdown, ...)
 │   │   ├── directive/            # Custom directives (click-outside)
-│   │   ├── layout/               # Master layouts & navigation shells (app-layout, app-header, app-sidebar, auth-page-layout, backdrop)
 │   │   ├── pipe/                 # Custom pipes (safe-html)
-│   │   └── services/             # Core singleton services (theme, sidebar, dropdown, live-directionality)
+│   │   └── utils/                # Shared helpers (apex-tooltip)
 │   ├── app.component.ts          # Root component (handles RTL persistence and initialization)
 │   ├── app.config.ts             # Application configuration & providers (router, change detection, live directionality)
 │   └── app.routes.ts             # Application routing definitions

@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DropdownComponent } from '../../ui/dropdown/dropdown.component';
-import { DropdownItemComponent } from '../../ui/dropdown/dropdown-item/dropdown-item.component';
-import { DropdownService } from '../../../services/dropdown.service';
-import { ButtonComponent } from '../../ui/button/button.component';
+import { DropdownComponent } from '../../../shared/components/ui/dropdown/dropdown.component';
+import { DropdownItemComponent } from '../../../shared/components/ui/dropdown/dropdown-item/dropdown-item.component';
+import { DropdownService } from '../../../core/services/dropdown.service';
+import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 
 interface NotificationItem {
   id: string;

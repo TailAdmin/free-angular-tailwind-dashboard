@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ThemeToggleButtonComponent } from '../../components/common/theme-toggle/theme-toggle-button.component';
-import { NotificationDropdownComponent } from '../../components/header/notification-dropdown/notification-dropdown.component';
-import { UserDropdownComponent } from '../../components/header/user-dropdown/user-dropdown.component';
-import { SidebarService } from '../../services/sidebar.service';
+import { ThemeToggleButtonComponent } from '../../../shared/components/common/theme-toggle/theme-toggle-button.component';
+import { NotificationDropdownComponent } from '../../header/notification-dropdown/notification-dropdown.component';
+import { UserDropdownComponent } from '../../header/user-dropdown/user-dropdown.component';
+import { SidebarService } from '../../../core/services/sidebar.service';
 
-import { ButtonComponent } from '../../components/ui/button/button.component';
-import { InputDirective } from '../../components/ui/input/input.directive';
+import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
+import { InputDirective } from '../../../shared/components/ui/input/input.directive';
 
 @Component({
   selector: 'app-header',

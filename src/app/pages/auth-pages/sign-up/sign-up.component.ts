@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import SignUpContentComponent from '../../../shared/components/full-width-pages/auth/sign-up';
-import { AuthPageLayoutComponent } from '../../../shared/layout/auth-page-layout/auth-page-layout.component';
+import { AuthPageLayoutComponent } from '../../../layout/shell/auth-page-layout/auth-page-layout.component';
 
 
 @Component({

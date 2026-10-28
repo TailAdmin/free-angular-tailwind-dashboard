@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthPageLayoutComponent } from '../../../shared/layout/auth-page-layout/auth-page-layout.component';
+import { AuthPageLayoutComponent } from '../../../layout/shell/auth-page-layout/auth-page-layout.component';
 import { SignInContentComponent } from '../../../shared/components/full-width-pages/auth/sign-in';
 
 @Component({

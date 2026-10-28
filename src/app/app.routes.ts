@@ -5,7 +5,7 @@ import { FormElementsComponent } from './pages/forms/form-elements/form-elements
 import { BasicTablesComponent } from './pages/tables/basic-tables/basic-tables.component';
 import { BlankComponent } from './pages/blank/blank.component';
 import { NotFoundComponent } from './pages/other-page/not-found/not-found.component';
-import { AppLayoutComponent } from './shared/layout/app-layout/app-layout.component';
+import { AppLayoutComponent } from './layout/shell/app-layout/app-layout.component';
 import { InvoiceComponent } from './pages/ecommerce/invoice/invoice.component';
 import { LineChartComponent } from './pages/charts/line-chart/line-chart.component';
 import { BarChartComponent } from './pages/charts/bar-chart/bar-chart.component';

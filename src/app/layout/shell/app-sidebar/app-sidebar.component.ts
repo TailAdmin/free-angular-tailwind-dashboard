@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
-import { SafeHtmlPipe } from '../../pipe/safe-html.pipe';
-import { SidebarService } from '../../services/sidebar.service';
+import { SafeHtmlPipe } from '../../../shared/pipe/safe-html.pipe';
+import { SidebarService } from '../../../core/services/sidebar.service';
 import { SidebarWidgetComponent } from './app-sidebar-widget.component';
-import { ButtonComponent } from '../../components/ui/button/button.component';
+import { ButtonComponent } from '../../../shared/components/ui/button/button.component';
 
 type NavItem = {
   name: string;
