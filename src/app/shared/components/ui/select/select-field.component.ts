@@ -6,10 +6,6 @@ export interface SelectFieldOption {
   label: string;
 }
 
-/**
- * Convenience wrapper around the spartan-ng based select primitives
- * (`app-select`, `app-select-trigger`, ...) for plain option lists.
- */
 @Component({
   selector: 'app-select-field',
   imports: [...SELECT_IMPORTS],
@@ -18,6 +14,7 @@ export interface SelectFieldOption {
     <app-select
       [value]="value"
       [disabled]="disabled"
+      [itemToString]="itemToString"
       (valueChange)="onValueChange($event)"
     >
       <app-select-trigger [ariaLabel]="ariaLabel" [className]="triggerClass">
@@ -44,6 +41,10 @@ export class SelectFieldComponent {
   get normalizedOptions(): SelectFieldOption[] {
     return this.options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
   }
+
+  /** Shows the option label (not the raw value) in the trigger, even before the list is opened. */
+  itemToString = (value: unknown): string =>
+    this.normalizedOptions.find((o) => o.value === value)?.label ?? String(value ?? '');
 
   onValueChange(value: unknown) {
     this.valueChange.emit(value as string);

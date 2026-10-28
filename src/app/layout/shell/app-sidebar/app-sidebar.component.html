@@ -210,11 +210,11 @@
                         [class.menu-item-icon-inactive]="!isActive(nav.path)"
                         [innerHTML]="nav.icon | safeHtml"
                       ></span>
-                      <span class="menu-item-text">
-                        @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                        <span class="menu-item-text">
                           {{ nav.name }}
-                        }
-                      </span>
+                        </span>
+                      }
                     </a>
                   }
                 }
@@ -391,11 +391,11 @@
                         [class.menu-item-icon-inactive]="!isActive(nav.path)"
                         [innerHTML]="nav.icon | safeHtml"
                       ></span>
-                      <span class="menu-item-text">
-                        @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                      @if ((isExpanded$ | async) || (isHovered$ | async) || (isMobileOpen$ | async)) {
+                        <span class="menu-item-text">
                           {{ nav.name }}
-                        }
-                      </span>
+                        </span>
+                      }
                     </a>
                   }
                 }

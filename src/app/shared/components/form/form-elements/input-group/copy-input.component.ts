@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../ui/button/button.component';
 import { InputDirective } from '../../../ui/input/input.directive';
@@ -39,7 +39,7 @@ import { InputDirective } from '../../../ui/input/input.directive';
             (click)="handleCopy()"
             class="flex h-full cursor-pointer items-center gap-1.5 rounded-e-[10px] px-3.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 focus:outline-hidden dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-white"
           >
-            @if (copied) {
+            @if (copied()) {
               <svg
                 class="size-4 text-green-500"
                 width="24"
@@ -78,15 +78,21 @@ import { InputDirective } from '../../../ui/input/input.directive';
     </div>
   `,
 })
-export class CopyInputComponent {
+export class CopyInputComponent implements OnDestroy {
   value = 'www.tailadmin.com';
-  copied = false;
+  copied = signal(false);
+  private copiedTimer?: ReturnType<typeof setTimeout>;
+
+  ngOnDestroy(): void {
+    clearTimeout(this.copiedTimer);
+  }
 
   async handleCopy() {
     try {
       await navigator.clipboard.writeText(this.value);
-      this.copied = true;
-      setTimeout(() => (this.copied = false), 2000);
+      this.copied.set(true);
+      clearTimeout(this.copiedTimer);
+      this.copiedTimer = setTimeout(() => this.copied.set(false), 2000);
     } catch (err) {
       console.error('Failed to copy text: ', err);
     }

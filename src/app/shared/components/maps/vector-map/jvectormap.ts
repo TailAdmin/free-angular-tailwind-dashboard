@@ -9,7 +9,8 @@ export interface VectorMapInstance {
   scale: number;
   _width: number;
   _height: number;
-  setScale(scale: number, anchorX?: number, anchorY?: number, isCentered?: boolean, animate?: boolean): void;
+  /** jsvectormap exposes its zoom method as `_setScale` (the same one its built-in zoom buttons call). */
+  _setScale(scale: number, anchorX?: number, anchorY?: number, isCentered?: boolean, animate?: boolean): void;
   destroy(): void;
 }
 
@@ -57,5 +58,5 @@ export function createVectorMap(selector: HTMLElement, options: VectorMapOptions
 export function zoomVectorMap(map: VectorMapInstance | undefined, direction: 'in' | 'out') {
   if (!map) return;
   const factor = direction === 'in' ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
-  map.setScale(map.scale * factor, map._width / 2, map._height / 2, false, true);
+  map._setScale(map.scale * factor, map._width / 2, map._height / 2, false, true);
 }

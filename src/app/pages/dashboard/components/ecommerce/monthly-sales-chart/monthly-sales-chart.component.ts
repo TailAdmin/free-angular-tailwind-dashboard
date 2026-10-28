@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -14,6 +15,7 @@ import {
   ApexYAxis,
   NgApexchartsModule,
 } from 'ng-apexcharts';
+import { ThemeService } from '../../../../../core/services/theme.service';
 import { DropdownItemComponent } from '../../../../../shared/components/ui/dropdown/dropdown-item/dropdown-item.component';
 import { DropdownComponent } from '../../../../../shared/components/ui/dropdown/dropdown.component';
 import { ButtonComponent } from '../../../../../shared/components/ui/button/button.component';
@@ -30,7 +32,11 @@ import { ButtonComponent } from '../../../../../shared/components/ui/button/butt
   ],
   templateUrl: './monthly-sales-chart.component.html',
 })
-export class MonthlySalesChartComponent {
+export class MonthlySalesChartComponent implements OnInit, OnDestroy {
+  private themeSub?: Subscription;
+
+  constructor(private themeService: ThemeService) {}
+
   public series: ApexAxisChartSeries = [
     {
       name: 'Sales',
@@ -173,5 +179,24 @@ export class MonthlySalesChartComponent {
 
   closeDropdown() {
     this.isOpen = false;
+  }
+
+  ngOnInit(): void {
+    this.themeSub = this.themeService.isDarkMode$.subscribe((isDark: boolean) => {
+      const labelColor = isDark ? '#94A3B8' : '#364153';
+      this.dataLabels = {
+        ...this.dataLabels,
+        style: { ...this.dataLabels.style, colors: [labelColor] },
+      };
+      this.xaxis = {
+        ...this.xaxis,
+        labels: { ...this.xaxis.labels, style: { ...this.xaxis.labels?.style, colors: labelColor } },
+      };
+      this.grid = { ...this.grid, borderColor: isDark ? '#1E2640' : '#F3F4F6' };
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.themeSub?.unsubscribe();
   }
 }
