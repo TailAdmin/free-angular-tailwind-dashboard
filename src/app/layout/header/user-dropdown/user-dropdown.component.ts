@@ -108,6 +108,15 @@ export class UserDropdownComponent implements OnInit, OnDestroy {
     this.subDropdownOpen = true;
   }
 
+  /** Closes the language flyout right away (pointer moved onto another menu item, like Laravel/Vue). */
+  closeSubDropdown(): void {
+    this.clearSubCloseTimer();
+    if (this.subDropdownOpen) {
+      this.subDropdownOpen = false;
+      this.cdr.detectChanges();
+    }
+  }
+
   /** Small delay so the pointer can travel from the trigger to the flyout. */
   scheduleCloseSubDropdown(): void {
     this.clearSubCloseTimer();
