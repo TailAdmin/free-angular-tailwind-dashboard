@@ -53,6 +53,13 @@
         "typescript": "~6.0.0"
     },
     "optionalDependencies": {
+        "@esbuild/linux-x64": "0.28.2",
+        "@lmdb/lmdb-linux-x64": "3.5.6",
+        "@msgpackr-extract/msgpackr-extract-linux-x64": "3.0.4",
+        "@napi-rs/nice-linux-x64-gnu": "1.1.1",
+        "@oxc-parser/binding-linux-x64-gnu": "0.142.0",
+        "@parcel/watcher-linux-x64-glibc": "2.6.0",
+        "@rolldown/binding-linux-x64-gnu": "1.2.0",
         "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3",
         "lightningcss-linux-x64-gnu": "^1.33.0"
     },
