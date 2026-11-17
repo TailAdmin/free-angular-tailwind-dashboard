@@ -104,6 +104,11 @@ TailAdmin Angular ships with a rich set of **ready-to-use dashboard features**:
 
 ## Changelog
 
+### Version 1.3.1 - [November 17, 2026]
+
+- **RTL Improvements**: Improved RTL support for buttons and charts.
+- **Fixes**: Hid the native arrow on phone number country selects.
+
 ### Version 1.3.0 - [October 28, 2026]
 
 - **Design Refresh**: Refactored UI components built on `@spartan-ng/brain` headless primitives.
